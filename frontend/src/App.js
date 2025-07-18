@@ -1,11 +1,13 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate,}from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import Home from "./pages/Dashboard/Home";
 import AuditLog from "./pages/Dashboard/AuditLog";
 import UserManagement from "./pages/Dashboard/UserManagement";
+import ManageAdmins from './pages/Dashboard/ManageAdmins';
+import ManageEmployees from './pages/Dashboard/ManageEmployees';
 
 
 function App() {
@@ -13,12 +15,14 @@ function App() {
     <div>
       <Router>
         <Routes>
-            <Route path="/" element={<Root />}/>
-            <Route path="/login" element={<Login/>}/>
+            <Route path="/" element={<Login />}/>
+            {/* <Route path="/login" element={<Login/>}/> */}
             <Route path="/signUp" element={<SignUp/>}/>
             <Route path="/dashboard" element={<Home/>}/>
             <Route path="/auditLog" element={<AuditLog/>}/>
             <Route path="/userManagement" element={<UserManagement/>}/>
+            <Route path="/manageAdmins" element={<ManageAdmins/>}/>
+            <Route path="/manageEmployees" element={<ManageEmployees/>}/>
         </Routes>
       </Router>
       

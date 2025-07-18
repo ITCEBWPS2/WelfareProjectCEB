@@ -56,7 +56,9 @@ const Login = () => {
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}</div>
             </div>
           </div>
-          <button type="submit" className="w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">Sign In</button>
+          <button
+          onClick={() => navigate('/dashboard')}
+          type="submit" className="w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">Sign In</button>
         </form>
       </div>
     </div>
