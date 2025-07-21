@@ -1,16 +1,18 @@
-import express from 'express';
-import mongoose from 'mongoose'
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
-dotenv.config();
+const express = require('express');
+const mongoose = require('mongoose');
+// const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotenv = require("dotenv");
 
 const app = express();
+dotenv.config();
+
+app.use(express.json());
 
 const PORT = process.env.PORT || 8070;
 
 app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 const URL = process.env.MONGODB_URL;
 
@@ -27,3 +29,6 @@ connection.once("open", () =>  {
 app.listen(PORT, () => {
     console.log(`🚀 Server is up and running on port ${PORT}`)
 })
+
+const authRoutes = require("./routes/authRoutes");
+app.use("/api/v1/auth", authRoutes);
