@@ -11,6 +11,12 @@ import AuditLog from "./pages/Dashboard/AuditLog";
 import UserManagement from "./pages/Dashboard/UserManagement";
 import ManageAdmins from './pages/Dashboard/ManageAdmins';
 import ManageEmployees from './pages/Dashboard/ManageEmployees';
+import LoansManagement from './pages/Dashboard/LoansManagement';
+import DeathFundDashboard from './pages/Dashboard/DeathFundsManagement';
+import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagement';
+import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
+import RefundsDashboard from './pages/Dashboard/RefundsManagement';
+import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
 
 
 function App() {
@@ -29,6 +35,12 @@ function App() {
             <Route path="/userManagement" element={<UserManagement/>}/>
             <Route path="/manageAdmins" element={<ManageAdmins/>}/>
             <Route path="/manageEmployees" element={<ManageEmployees/>}/>
+            <Route path="/loansManagement" element={<LoansManagement/>}/>
+            <Route path="/deathFundDashboard" element={<DeathFundDashboard/>}/>
+            <Route path="/retirementGiftsDashboard" element={<RetirementGiftsDashboard/>}/>
+            <Route path="/scholarships" element={<Scholarships/>}/>
+            <Route path="/refundsDashboard" element={<RefundsDashboard/>}/>
+            <Route path="/medicalsDashboard" element={<MedicalsDashboard/>}/>
         </Routes>
       </Router>
       
