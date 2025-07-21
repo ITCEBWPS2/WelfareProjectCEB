@@ -12,7 +12,7 @@ const ManageAdmins = () => {
   const adminActions = [
   { title: 'New Admins', icon: <UserPlus size={24} className="text-orange-600" />, path: '/createAdmin'},
   { title: 'View Admins', icon: <Users size={24} className="text-orange-600" />, path: '/viewAdmin' },
-  { title: 'Change Password', icon: <KeyRound size={24} className="text-orange-600" /> },
+  { title: 'Update Admins', icon: <KeyRound size={24} className="text-orange-600" />, path: '/updateAdmin'},
   { title: 'Delete Admins', icon: <UserX size={24} className="text-orange-600" />,path: '/deleteAdmin' },
 ];
 

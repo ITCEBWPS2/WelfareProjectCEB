@@ -5,6 +5,7 @@ import Login from "./pages/Auth/Login";
 import CreateAdmin from "./pages/Dashboard/CreateAdmin";
 import ViewAdmin from "./pages/Dashboard/ViewAdmin";
 import DeleteAdmin from "./pages/Dashboard/DeleteAdmin";
+import UpdateAdmin from "./pages/Dashboard/UpdateAdmin";
 import Home from "./pages/Dashboard/Home";
 import AuditLog from "./pages/Dashboard/AuditLog";
 import UserManagement from "./pages/Dashboard/UserManagement";
@@ -21,7 +22,8 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/createAdmin" element={<CreateAdmin/>}/>
             <Route path="/viewAdmin" element={<ViewAdmin/>}/>
-            <Route path="/deleteAdmin/:id" element={<DeleteAdmin/>}/>
+            <Route path="/deleteAdmin" element={<DeleteAdmin/>}/>
+            <Route path="/updateAdmin" element={<UpdateAdmin/>}/>
             <Route path="/dashboard" element={<Home/>}/>
             <Route path="/auditLog" element={<AuditLog/>}/>
             <Route path="/userManagement" element={<UserManagement/>}/>
@@ -42,8 +44,8 @@ const Root = () => {
 
   //Redirect to dashboard if authenticated, otherwise to login
   return isAuthenticated ? (
-    <Navigate to="/dashboard" />
-   ) : (
     <Navigate to="/login" />
+   ) : (
+    <Navigate to="/dashboard" />
    );
 };
