@@ -82,7 +82,7 @@ const Login = () => {
             </div>
           </div>
           <button
-          onClick={() => navigate('/dashboard')}
+          
           type="submit" className="w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 transition-colors">Sign In</button>
         </form>
       </div>
