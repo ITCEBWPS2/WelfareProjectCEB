@@ -3,7 +3,7 @@ import bgImage from '../../images/background.png';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, Users, KeyRound, UserX } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
+import SideBar from "../Dashboard/SideBar";
 
 
 const ManageAdmins = () => {
@@ -13,7 +13,7 @@ const ManageAdmins = () => {
   { title: 'New Admins', icon: <UserPlus size={24} className="text-orange-600" />, path: '/createAdmin'},
   { title: 'View Admins', icon: <Users size={24} className="text-orange-600" />, path: '/viewAdmin' },
   { title: 'Change Password', icon: <KeyRound size={24} className="text-orange-600" /> },
-  { title: 'Delete Admins', icon: <UserX size={24} className="text-orange-600" /> },
+  { title: 'Delete Admins', icon: <UserX size={24} className="text-orange-600" />,path: '/deleteAdmin' },
 ];
 
   const handleLogout = () => {
@@ -26,58 +26,7 @@ const ManageAdmins = () => {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <aside className="w-72 bg-gradient-to-b from-white/90 to-white/60 border-r shadow-sm p-4 flex flex-col justify-between">
-        <div>
-          <div className="text-center mb-6">
-            <h1 className="text-xl font-bold text-gray-800 leading-tight pb-10">
-              CEB WELFARE <br /> WPS II
-            </h1>
-          </div>
-          <nav>
-            <h2 className="text-xl text-gray-700 font-bold uppercase mb-2">Dashboard</h2>
-            <ul className="mb-4 space-y-2">
-              <li>
-                <button 
-                  onClick={() => navigate('/dashboard')}
-                  className="w-full text-left px-7 py-2 rounded-md text-gray-700 hover:bg-blue-100 transition text-lg"
-                >
-                  Dashboard
-                </button>
-              </li>
-              <li>
-                <button
-                onClick={() => navigate('/auditLog')}
-                className="w-full text-left px-7 py-2 rounded-md text-gray-700 hover:bg-blue-100 transition text-lg">
-                  Audit Logs
-                </button>
-              </li>
-            </ul>
-            <h2 className="text-xl text-gray-700 font-bold uppercase mb-2">Admin Options</h2>
-            <ul className="space-y-2">
-              <li>
-                <button className="w-full text-left px-7 py-2 rounded-md text-gray-700 bg-orange-200 transition text-lg">
-                  Manage Admins
-                </button>
-              </li>
-              <li>
-                <button
-                onClick={() => navigate('/manageEmployees')}
-                className="w-full text-left px-7 py-2 rounded-md text-gray-700 hover:bg-blue-100 transition text-lg">
-                  Manage Employees
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div className="pt-6 pb-5">
-          <button
-            onClick={handleLogout}
-            className="w-full text-left px-7 py-2 rounded-md bg-green-500 text-black hover:bg-green-600 transition text-xl text-center font-bold"
-          >
-            Logout
-          </button>
-        </div>
-      </aside>
+      <SideBar />
 
       {/* Main Content */}
       <main

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate} from 'react-router-dom';
+import logo from '../../images/logo.png';
 
 const SideBar = () => {
 const navigate = useNavigate();
@@ -15,6 +16,14 @@ const handleLogout = () => {
       <aside className="w-72 bg-gradient-to-b from-white/90 to-white/60 border-r shadow-sm p-4 flex flex-col justify-between">
         <div>
           <div className="text-center mb-6">
+            {/* Logo Image */}
+            <img
+              src={logo} 
+              alt="CEB Logo"
+              className="mx-auto mb-4 w-16 h-16 object-contain"
+            />
+
+            {/* Title */}
             <h1 className="text-xl font-bold text-gray-800 leading-tight pb-10">
               CEB WELFARE <br /> WPS II
             </h1>
@@ -39,8 +48,8 @@ const handleLogout = () => {
               </li>
             </ul>
           </nav>
-        </div>
-        <div className="pt-6 pb-5">
+        </div><br></br>
+        <div className="pt-24 pb-18">
           <button onClick={handleLogout} className="w-full text-left px-7 py-2 rounded-md bg-green-500 text-black hover:bg-green-600 transition text-xl text-center font-bold">Logout</button>
         </div>
       </aside>
