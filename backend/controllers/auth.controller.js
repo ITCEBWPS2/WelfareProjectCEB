@@ -34,9 +34,9 @@ exports.loginAdmin = async (req, res) => {
 
 // Create Admin
 exports.createAdmin = async (req, res) => {
-  const { username, password } = req.body;
+  const { epfNo, username, password } = req.body;
 
-  if (!username || !password) {
+  if (!epfNo || !username || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -46,10 +46,11 @@ exports.createAdmin = async (req, res) => {
       return res.status(400).json({ message: "Username already exists" });
     }
 
-    const admin = await Admin.create({ username, password });
+    const admin = await Admin.create({ epfNo, username, password });
 
     res.status(201).json({
       id: admin._id,
+      epfNo: admin.epfNo,
       username: admin.username,
       token: generateToken(admin._id),
     });
@@ -57,3 +58,28 @@ exports.createAdmin = async (req, res) => {
     res.status(500).json({ message: "Error creating admin", error: err.message });
   }
 };
+
+
+// Get all admins
+exports.viewAdmin = async (req, res) => {
+  try {
+    const admins = await Admin.find().select('-password'); // Exclude password
+    res.status(200).json(admins);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching admins", error: err.message });
+  }
+};
+
+// Get single admin by ID
+exports.viewAdminById = async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id).select('-password');
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+    res.status(200).json(admin);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching admin", error: err.message });
+  }
+};
+

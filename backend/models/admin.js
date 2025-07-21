@@ -3,6 +3,10 @@ const bcrypt = require("bcrypt");
 
 const adminSchema = new mongoose.Schema(
     {
+        epfNo:{
+            type:Number,
+            required:true,
+        },
         username: {
             type: String,
             unique: true,

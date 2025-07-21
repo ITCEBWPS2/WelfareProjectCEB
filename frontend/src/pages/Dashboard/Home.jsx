@@ -108,7 +108,7 @@ const Home = () => {
 
       {/* Main Content */}
       <main
-        className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
+        className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-hidden h-screen"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         {/* Overlay */}

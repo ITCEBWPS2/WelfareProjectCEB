@@ -2,7 +2,8 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from "./pages/Auth/Login";
-import CreateAdmin from "./pages/Auth/CreateAdmin";
+import CreateAdmin from "./pages/Dashboard/CreateAdmin";
+import ViewAdmin from "./pages/Dashboard/ViewAdmin";
 import Home from "./pages/Dashboard/Home";
 import AuditLog from "./pages/Dashboard/AuditLog";
 import UserManagement from "./pages/Dashboard/UserManagement";
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Root />}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/createAdmin" element={<CreateAdmin/>}/>
+            <Route path="/viewAdmin" element={<ViewAdmin/>}/>
             <Route path="/dashboard" element={<Home/>}/>
             <Route path="/auditLog" element={<AuditLog/>}/>
             <Route path="/userManagement" element={<UserManagement/>}/>
