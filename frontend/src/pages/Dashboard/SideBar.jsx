@@ -1,14 +1,25 @@
 import React from 'react'
 import { useNavigate} from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const SideBar = () => {
 const navigate = useNavigate();
 
-const handleLogout = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
-      navigate('/');
-    }
-  };
+const handleLogout = async () => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You will be logged out!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, log me out!",
+  });
+
+  if (result.isConfirmed) {
+    navigate("/login");
+  }
+};
 
   return (
     <div>

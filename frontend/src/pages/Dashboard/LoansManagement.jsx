@@ -1,21 +1,19 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import React, { useEffect, useState, createContext } from "react"; // Removed useContext
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import bgImage from '../../images/background.png';
 
-// Mock Implementations: These are kept as is, but in a real application,
-// you'd replace them with your actual authentication context, navigation hook, and toast library.
+import LoanApplication from '../Applications/LoanApplication'; 
+
 const AuthContext = createContext(null);
 const useAuth = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    // In a real app, this would fetch user from an API or global state
     setUser({ role: 'SuperAdmin', uid: 'mock-user-id' }); // Example: Set to SuperAdmin for testing
   }, []);
   return { user };
 };
 
-// Assuming you have toast notifications setup, e.g., react-hot-toast or similar
 const toast = {
   success: (message) => console.log("Success:", message),
   error: (message) => console.error("Error:", message),
@@ -126,7 +124,7 @@ const PopoverContent = ({ children, onClose, className }) => (
 
 const BASE_URL = "http://localhost:5000"; // IMPORTANT: Replace with your actual backend URL
 
-const LoansTable = ({ status: propStatus = "all", tableTitle }) => { // Added tableTitle prop
+const LoansTable = ({ status: propStatus = "all", tableTitle }) => {
   const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loanStatus, setLoanStatus] = useState("");
@@ -140,11 +138,10 @@ const LoansTable = ({ status: propStatus = "all", tableTitle }) => { // Added ta
 
   const allowedStatuses = ["pending", "approved", "rejected"];
 
-  useEffect(() => {
-    fetchLoans();
-  }, [propStatus]);
-
-  const fetchLoans = async () => {
+  // Memoize fetchLoans if it's not stable, but for this use case,
+  // adding it to deps is fine and ESLint will be happy.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchLoans = React.useCallback(async () => { // Wrapped with useCallback for stability
     setLoading(true);
     try {
       let url = `${BASE_URL}/api/loans/util/loans-by-status`;
@@ -174,7 +171,11 @@ const LoansTable = ({ status: propStatus = "all", tableTitle }) => { // Added ta
     } finally {
       setLoading(false);
     }
-  };
+  }, [propStatus]); // fetchLoans depends on propStatus
+
+  useEffect(() => {
+    fetchLoans();
+  }, [propStatus, fetchLoans]); // Added fetchLoans to dependency array
 
   const fetchMemberId = async (epf) => {
     setLoading(true);
@@ -263,7 +264,7 @@ const LoansTable = ({ status: propStatus = "all", tableTitle }) => { // Added ta
                 "Loan Number",
                 "Loan Amount",
                 "Status",
-                "Actions", 
+                "Actions",
                 "Loans Count",
               ].map((header) => (
                 <th
@@ -435,14 +436,15 @@ const LoansTable = ({ status: propStatus = "all", tableTitle }) => { // Added ta
 };
 
 
-const LoanDashboard = () => {
+const LoanDashboard = () => { // Renamed from LoanManagement to match your file name context
   const navigate = useNavigate();
   const [activeStatusFilter, setActiveStatusFilter] = useState("all");
-  // State to hold the dynamic table title
-  const [tableTitle, setTableTitle] = useState("All Loans"); // Initial title
+  const [tableTitle, setTableTitle] = useState("All Loans");
+
+  // New state to control the visibility of the LoanApplication modal
+  const [showNewLoanModal, setShowNewLoanModal] = useState(false);
 
   useEffect(() => {
-    // Update the table title whenever the filter changes
     if (activeStatusFilter === "all") {
       setTableTitle("All Loans");
     } else {
@@ -457,8 +459,14 @@ const LoanDashboard = () => {
     }
   };
 
+  // Modified handleAddNewLoan to open the modal
   const handleAddNewLoan = () => {
-    navigate("/dashboard/loans/add");
+    setShowNewLoanModal(true);
+  };
+
+  // Function to close the LoanApplication modal
+  const handleCloseNewLoanModal = () => {
+    setShowNewLoanModal(false);
   };
 
   return (
@@ -532,7 +540,7 @@ const LoanDashboard = () => {
 
           <div className="flex flex-col md:flex-row justify-between items-center mt-20 mb-6 space-y-4 md:space-y-0 md:space-x-4 max-w-7xl mx-auto">
             <button
-              onClick={handleAddNewLoan}
+              onClick={handleAddNewLoan} // This button now sets showNewLoanModal to true
               className="px-6 py-2 rounded-full text-m font-medium transition-all duration-300
                          bg-green-600 text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full md:w-auto"
             >
@@ -558,7 +566,10 @@ const LoanDashboard = () => {
           </div>
 
           {/* Loan Table */}
-          <LoansTable status={activeStatusFilter} tableTitle={tableTitle} /> {/* Pass tableTitle as a prop */}
+          <LoansTable status={activeStatusFilter} tableTitle={tableTitle} />
+
+          {/* Conditionally render the LoanApplication modal */}
+          {showNewLoanModal && <LoanApplication onClose={handleCloseNewLoanModal} />}
         </div>
       </main>
     </div>

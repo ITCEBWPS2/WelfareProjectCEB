@@ -1,13 +1,13 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import bgImage from '../../images/background.png';
+import ScholarshipForm from '../Applications/ScholarshipApplication';
 
 const AuthContext = createContext(null);
 const useAuth = () => {
     const [user, setUser] = useState(null);
     useEffect(() => {
-        // Example: Set to SuperAdmin for testing
         setUser({ role: 'SuperAdmin', uid: 'mock-user-id' });
     }, []);
     return { user };
@@ -24,9 +24,6 @@ const isTreasurerOrAssistantTreasurer = (user) =>
 
 const SquarePen = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>;
 const Trash2 = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>;
-// No longer need ArrowLeft as breadcrumbs are removed
-// const ArrowLeft = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>;
-
 
 const DialogContext = React.createContext();
 
@@ -88,7 +85,7 @@ const DialogDescription = ({ children, className }) => (
     </p>
 );
 
-const BASE_URL = "http://localhost:5000"; // IMPORTANT: Replace with your actual backend URL
+const BASE_URL = "http://localhost:5000";
 
 const ScholarshipsTable = ({ tableTitle }) => {
     const [scholarships, setScholarships] = useState([]);
@@ -161,10 +158,8 @@ const ScholarshipsTable = ({ tableTitle }) => {
     return (
         <div className="font-sans antialiased">
             <div className="overflow-x-auto bg-white/70 rounded-lg shadow-lg p-4 backdrop-blur-sm">
-                {/* This h2 now serves as the immediate topic above the table */}
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">{tableTitle}</h2>
                 <table className="min-w-full bg-white/80 rounded-lg overflow-hidden">
-                    {/* Changed table header colors to green-500 from orange-600 */}
                     <thead className="bg-orange-600 text-white text-xs md:text-sm">
                         <tr>
                             {[
@@ -203,7 +198,6 @@ const ScholarshipsTable = ({ tableTitle }) => {
                                     </td>
                                     <td className="px-4 py-2 text-sm whitespace-nowrap text-gray-800">
                                         <div className="flex space-x-2 items-center">
-                                            {/* Edit/View Details for Scholarship Entry (Treasurer/Assistant Treasurer) */}
                                             {isTreasurerOrAssistantTreasurer(user) && (
                                                 <button
                                                     className="bg-green-500 hover:bg-green-600 text-white rounded-md p-1.5 flex items-center justify-center transition-colors duration-200"
@@ -212,7 +206,6 @@ const ScholarshipsTable = ({ tableTitle }) => {
                                                     <SquarePen className="w-4 h-4" />
                                                 </button>
                                             )}
-                                            {/* Delete Scholarship Entry (Super Admin) */}
                                             {isSuperAdmin(user) && (
                                                 <button
                                                     className="bg-red-500 hover:bg-red-600 text-white rounded-md p-1.5 flex items-center justify-center transition-colors duration-200"
@@ -221,7 +214,6 @@ const ScholarshipsTable = ({ tableTitle }) => {
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             )}
-                                            {/* View User (Member) Details */}
                                             <button
                                                 onClick={() => fetchMemberId(s.epfNumber)}
                                                 className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-3 py-1.5 text-xs font-medium transition-colors duration-200"
@@ -261,9 +253,10 @@ const ScholarshipsTable = ({ tableTitle }) => {
 };
 
 
-const Scholarships = () => { // Main component for Scholarships
+const Scholarships = () => {
     const navigate = useNavigate();
-    const [tableTitle, setTableTitle] = useState("Scholarships List"); // Changed to "Scholarships List" for clarity as a table title
+    const [tableTitle] = useState("Scholarships List");
+    const [isScholarshipFormOpen, setIsScholarshipFormOpen] = useState(false);
 
     const handleLogout = () => {
         if (window.confirm("Are you sure you want to log out?")) {
@@ -271,13 +264,11 @@ const Scholarships = () => { // Main component for Scholarships
         }
     };
 
-    const handleNewScholarship = () => {
-        navigate("/dashboard/scholarships/add");
-    };
+    const openScholarshipForm = () => setIsScholarshipFormOpen(true);
+    const closeScholarshipForm = () => setIsScholarshipFormOpen(false);
 
     return (
         <div className="flex h-screen">
-            {/* Sidebar - Kept as is */}
             <aside className="w-72 bg-gradient-to-b from-white/90 to-white/60 border-r shadow-sm p-4 flex flex-col justify-between">
                 <div>
                     <div className="text-center mb-6">
@@ -333,7 +324,6 @@ const Scholarships = () => { // Main component for Scholarships
                 </div>
             </aside>
 
-            {/* Main Content */}
             <main
                 className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
                 style={{ backgroundImage: `url(${bgImage})` }}
@@ -346,15 +336,18 @@ const Scholarships = () => { // Main component for Scholarships
 
                     <div className="flex flex-col md:flex-row justify-between items-center mt-20 mb-6 space-y-4 md:space-y-0 md:space-x-4 max-w-7xl mx-auto">
                         <button
-                            onClick={handleNewScholarship}
+                            onClick={openScholarshipForm}
                             className="px-6 py-2 rounded-full text-m font-medium transition-all duration-300
-                                        bg-green-600 text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-full md:w-auto"
+                                bg-green-600 text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full md:w-auto"
                         >
                             + New Scholarship
                         </button>
                     </div>
 
-                    {/* Scholarships Table - tableTitle prop provides the topic inside the table component */}
+                    {isScholarshipFormOpen && (
+                        <ScholarshipForm onClose={closeScholarshipForm} />
+                    )}
+
                     <ScholarshipsTable tableTitle={tableTitle} />
                 </div>
             </main>

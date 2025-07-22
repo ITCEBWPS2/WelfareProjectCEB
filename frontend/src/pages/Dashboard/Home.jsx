@@ -8,6 +8,8 @@
   } from 'lucide-react';
   import bgImage from '../../images/background.png';
   import { useNavigate } from 'react-router-dom';
+  import SideBar from './SideBar';
+  import Swal from "sweetalert2";
 
   const Home = () => {
     const navigate = useNavigate();
@@ -51,10 +53,19 @@
       },
     ];
 
-    const handleLogout = () => {
-      const confirmLogout = window.confirm("Are you sure you want to log out?");
-      if (confirmLogout) {
-        navigate('/');
+    const handleLogout = async () => {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You will be logged out!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, log me out!",
+      });
+    
+      if (result.isConfirmed) {
+        navigate("/login");
       }
     };
 

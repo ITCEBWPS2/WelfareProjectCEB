@@ -2,6 +2,7 @@ import React, { useEffect, useState, createContext, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import bgImage from '../../images/background.png';
+import MedicalForm from '../Applications/MedicalApplication'; 
 
 const AuthContext = createContext(null);
 const useAuth = () => {
@@ -256,6 +257,7 @@ const MedicalsTable = ({ tableTitle }) => { // Renamed from RefundsTable
 const MedicalsDashboard = () => { // Renamed component
     const navigate = useNavigate();
     const [tableTitle, setTableTitle] = useState("Medicals"); 
+    const [showMedicalForm, setShowMedicalForm] = useState(false); // New state to control MedicalForm visibility
 
     const handleLogout = () => {
         if (window.confirm("Are you sure you want to log out?")) {
@@ -264,7 +266,14 @@ const MedicalsDashboard = () => { // Renamed component
     };
 
     const handleNewMedical = () => { 
-        navigate("/dashboard/medicals/add"); 
+        setShowMedicalForm(true); // Open the MedicalForm modal
+    };
+
+    const handleCloseMedicalForm = () => {
+        setShowMedicalForm(false); // Close the MedicalForm modal
+        // Optionally, you might want to re-fetch medicals here to update the table
+        // after a new medical claim is submitted.
+        // fetchMedicals(); // You'd need to pass fetchMedicals down or lift it up.
     };
 
     return (
@@ -339,7 +348,7 @@ const MedicalsDashboard = () => { // Renamed component
                         <button
                             onClick={handleNewMedical}
                             className="px-6 py-2 rounded-full text-m font-medium transition-all duration-300
-                                             bg-green-600 text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-full md:w-auto" // Changed button color to red
+                                            bg-green-600 text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full md:w-auto" 
                         >
                             + New Medical
                         </button>
@@ -349,6 +358,9 @@ const MedicalsDashboard = () => { // Renamed component
                     <MedicalsTable tableTitle={tableTitle} /> {/* Changed component name */}
                 </div>
             </main>
+
+            {/* Render MedicalForm component as a modal */}
+            {showMedicalForm && <MedicalForm onClose={handleCloseMedicalForm} />}
         </div>
     );
 };
