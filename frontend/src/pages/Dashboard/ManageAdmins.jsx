@@ -46,7 +46,7 @@ const ManageAdmins = () => {
                 <button
                   key={index}
                   onClick={() => navigate(action.path)}
-                  className="bg-white/90 shadow-md rounded-2xl p-8 text-xl font-semibold hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer hover:bg-orange-100 flex items-center justify-center space-x-3"
+                  className="bg-white/90 shadow-md rounded-2xl p-8 text-xl font-semibold hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer hover:bg-orange-100 flex items-center justify-center space-x-3 border-t-4 border-orange-500"
                 >
                   {action.icon}
                   <span>{action.title}</span>
