@@ -8,8 +8,8 @@ const ManageEmployees = () => {
   const navigate = useNavigate();
 
   const employeeActions = [
-    { title: 'New Employee', icon: <UserPlus size={24} className="text-orange-600" />, path: '/addMember' },
-    { title: 'View Employee', icon: <Users size={24} className="text-orange-600" />, path: '/viewMembers' },
+    { title: 'New Employee', icon: <UserPlus size={24} className="text-orange-600" />, path: '/createEmployee' },
+    { title: 'View Employee', icon: <Users size={24} className="text-orange-600" />, path: '/viewEmployees' },
     { title: 'Update Employee', icon: <UserCog size={24} className="text-orange-600" />, path: '/editMember' },
     { title: 'Delete Employee', icon: <UserX size={24} className="text-orange-600" />, path: '/deleteMember' },
   ];

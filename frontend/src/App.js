@@ -8,7 +8,6 @@ import DeleteAdmin from "./pages/Dashboard/DeleteAdmin";
 import UpdateAdmin from "./pages/Dashboard/UpdateAdmin";
 import Home from "./pages/Dashboard/Home";
 import AuditLog from "./pages/Dashboard/AuditLog";
-import UserManagement from "./pages/Dashboard/UserManagement";
 import ManageAdmins from './pages/Dashboard/ManageAdmins';
 import ManageEmployees from './pages/Dashboard/ManageEmployees';
 import LoansManagement from './pages/Dashboard/LoansManagement';
@@ -17,7 +16,9 @@ import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagemen
 import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
 import RefundsDashboard from './pages/Dashboard/RefundsManagement';
 import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
-
+import CreateEmployee from './pages/Dashboard/CreateEmployee';
+import ViewEmployees from './pages/Dashboard/ViewEmployee';
+import ViewEmployeeById from './pages/Dashboard/ViewEmployeeById';
 
 function App() {
   return (
@@ -26,15 +27,23 @@ function App() {
         <Routes>
             <Route path="/" element={<Root />}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/dashboard" element={<Home/>}/>
+            <Route path="/auditLog" element={<AuditLog/>}/>
+
+             {/* Admin Routes */}
+            <Route path="/manageAdmins" element={<ManageAdmins/>}/>
             <Route path="/createAdmin" element={<CreateAdmin/>}/>
             <Route path="/viewAdmin" element={<ViewAdmin/>}/>
             <Route path="/deleteAdmin" element={<DeleteAdmin/>}/>
             <Route path="/updateAdmin" element={<UpdateAdmin/>}/>
-            <Route path="/dashboard" element={<Home/>}/>
-            <Route path="/auditLog" element={<AuditLog/>}/>
-            <Route path="/userManagement" element={<UserManagement/>}/>
-            <Route path="/manageAdmins" element={<ManageAdmins/>}/>
+            
+
+            {/* Employee  Routes */}
             <Route path="/manageEmployees" element={<ManageEmployees/>}/>
+            <Route path="/createEmployee" element={<CreateEmployee/>}/>
+            <Route path="/viewEmployees" element={<ViewEmployees/>}/>
+            <Route path="/viewEmployee/:id" element={<ViewEmployeeById/>}/>
+            
             <Route path="/loansManagement" element={<LoansManagement/>}/>
             <Route path="/deathFundDashboard" element={<DeathFundDashboard/>}/>
             <Route path="/retirementGiftsDashboard" element={<RetirementGiftsDashboard/>}/>

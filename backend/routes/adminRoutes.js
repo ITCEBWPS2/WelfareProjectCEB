@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { viewAdmin, viewAdminById, deleteAdmin, updateAdmin } = require ("../controllers/admin.Controller");
+const { viewAdmin, viewAdminById, deleteAdmin, updateAdmin } = require ("../controllers/admin.controller");
 
 
 router.get("/viewAdmin", viewAdmin);
