@@ -1,4 +1,5 @@
-const Employee = require("../models/employee");
+const Employee = require("../models/Employee");
+const RetiredEmployee = require('../models/RetiredEmployee'); 
 
 // Get all employees
 exports.viewEmployees = async (req, res) => {
@@ -6,6 +7,7 @@ exports.viewEmployees = async (req, res) => {
     const employees = await Employee.find();
     res.status(200).json(employees);
   } catch (err) {
+    console.error("Error fetching employees:", err); 
     res.status(500).json({ message: "Error fetching employees", error: err.message });
   }
 };
@@ -67,3 +69,28 @@ exports.createEmployee = async (req, res) => {
     res.status(400).json({ message: "Error creating employee", error: err.message });
   }
 };
+
+
+// Retire an employee by ID
+exports.retireEmployee = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find the employee by ID
+    const employee = await Employee.findById(id);
+    if (!employee) return res.status(404).json({ message: "Employee not found" });
+
+    // Create a retired employee with the same data
+    const retired = new RetiredEmployee(employee.toObject());
+    await retired.save();
+
+    // Remove from active employees
+    await Employee.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Employee retired successfully" });
+  } catch (err) {
+    console.error("❌ Error retiring employee:", err);  // <== log error to console
+    res.status(500).json({ message: "Error retiring employee", error: err.message });
+  }
+};
+

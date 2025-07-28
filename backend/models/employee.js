@@ -26,7 +26,7 @@ const employeeSchema = new mongoose.Schema(
     unit: { type: String, required: true },
     whatsappNumber: { type: String },
     contactNumber: { type: String, required: true },
-
+    retiredDate: { type: Date }, // 👈 add this field
     // Family Info
     spouse: {
       name: { type: String },
@@ -53,7 +53,7 @@ const employeeSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = mongoose.model("Employee", employeeSchema);

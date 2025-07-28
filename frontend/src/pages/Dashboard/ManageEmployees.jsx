@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, UserPlus, UserCog, UserX } from 'lucide-react';
+import { Users, UserPlus, UserCog, Briefcase  } from 'lucide-react';
 import bgImage from '../../images/background.png';
 import { useNavigate, Link } from 'react-router-dom';
 import SideBar from "../Dashboard/SideBar";
@@ -8,18 +8,18 @@ const ManageEmployees = () => {
   const navigate = useNavigate();
 
   const employeeActions = [
-    { title: 'New Employee', icon: <UserPlus size={24} className="text-orange-600" />, path: '/createEmployee' },
-    { title: 'View Employee', icon: <Users size={24} className="text-orange-600" />, path: '/viewEmployees' },
-    { title: 'Update Employee', icon: <UserCog size={24} className="text-orange-600" />, path: '/editMember' },
-    { title: 'Delete Employee', icon: <UserX size={24} className="text-orange-600" />, path: '/deleteMember' },
+    { title: 'New Employee', icon: <UserPlus size={24} className="text-red-950" />, path: '/createEmployee' },
+    { title: 'View Employee', icon: <Users size={24} className="text-red-950" />, path: '/viewEmployees' },
+    { title: 'Update Employee', icon: <UserCog size={24} className="text-red-950" />, path: '/updateEmployee' },
+    { title: 'Retired Employee', icon: <Briefcase  size={24} className="text-red-950" />, path: '/viewRetiredEmployees' },
   ];
 
-  const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      navigate('/');
-    }
-  };
+  // const handleLogout = () => {
+  //   const confirmLogout = window.confirm("Are you sure you want to log out?");
+  //   if (confirmLogout) {
+  //     navigate('/');
+  //   }
+  // };
 
   return (
     <div className="flex h-screen">
@@ -41,7 +41,7 @@ const ManageEmployees = () => {
                 <button
                   key={index}
                   onClick={() => navigate(action.path)}
-                  className="bg-white/90 shadow-md rounded-2xl p-8 text-xl font-semibold hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer hover:bg-orange-100 flex items-center justify-center space-x-3"
+                  className="bg-white/90 text-slate-600 shadow-md rounded-2xl p-8 text-xl font-semibold hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer hover:bg-red-100 flex items-center justify-center space-x-3 border-b-4 border-red-950"
                 >
                   {action.icon}
                   <span>{action.title}</span>

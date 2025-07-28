@@ -38,3 +38,6 @@ app.use("/api/v1/admin", adminRoutes);
 
 const employeeRoutes = require("./routes/employeeRoutes");
 app.use("/api/v1/employee", employeeRoutes);
+
+const retireRoutes = require("./routes/retireRoutes");
+app.use("/api/v1/retire", retireRoutes);

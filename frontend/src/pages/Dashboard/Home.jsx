@@ -68,7 +68,7 @@ import SideBar from "../Dashboard/SideBar";
         <div className="absolute inset-0 bg-black/30 z-0" />
         <div className="relative z-10 p-6">
           {/* Title */}
-          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">Dashboard</h2>
+          <h2 className="text-3xl font-bold text-white drop-shadow mt-12">Welcome to Welfare Portal !!</h2>
 
 
             {/* Cards */}

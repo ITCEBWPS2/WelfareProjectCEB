@@ -113,7 +113,7 @@ const UpdateAdmin = () => {
                             onClick={() => handleEditAdmin(admin)}
                             className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
                           >
-                           Edit Admin
+                           Update
                           </button>
                         </td>
                       </tr>

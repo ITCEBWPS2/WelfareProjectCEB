@@ -19,6 +19,9 @@ import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
 import CreateEmployee from './pages/Dashboard/CreateEmployee';
 import ViewEmployees from './pages/Dashboard/ViewEmployee';
 import ViewEmployeeById from './pages/Dashboard/ViewEmployeeById';
+import UpdateEmployee from './pages/Dashboard/UpdateEmployee';
+import EditEmployeeForm from './pages/Dashboard/EditEmployeeForm';
+import ViewRetiredEmployees from './pages/Dashboard/ViewRetiredEmployees';
 
 function App() {
   return (
@@ -43,6 +46,10 @@ function App() {
             <Route path="/createEmployee" element={<CreateEmployee/>}/>
             <Route path="/viewEmployees" element={<ViewEmployees/>}/>
             <Route path="/viewEmployee/:id" element={<ViewEmployeeById/>}/>
+            <Route path="/updateEmployee" element={<UpdateEmployee />} />
+            <Route path="/updateEmployee/:id" element={<EditEmployeeForm />} />
+            <Route path="/viewRetiredEmployees" element={<ViewRetiredEmployees />} />
+
             
             <Route path="/loansManagement" element={<LoansManagement/>}/>
             <Route path="/deathFundDashboard" element={<DeathFundDashboard/>}/>
