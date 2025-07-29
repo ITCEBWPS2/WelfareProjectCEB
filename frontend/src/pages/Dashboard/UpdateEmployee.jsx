@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import bgImage from '../../images/background.png';
 import SideBar from '../Dashboard/SideBar';
 
@@ -105,6 +105,7 @@ const UpdateEmployee = () => {
             </div>
           </div>
         </div>
+        <Link to="/manageEmployees" className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline">Back</Link>
       </main>
     </div>
   );
