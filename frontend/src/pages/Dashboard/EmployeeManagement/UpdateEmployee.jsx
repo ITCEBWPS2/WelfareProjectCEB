@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import bgImage from '../../images/background.png';
-import SideBar from '../Dashboard/SideBar';
-import Swal from 'sweetalert2';
+import bgImage from '../../../images/background.png';
+import SideBar from '../../Dashboard/SideBar';
 
-const ViewEmployee = () => {
+const UpdateEmployee = () => {
   const [employees, setEmployees] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -24,74 +23,37 @@ const ViewEmployee = () => {
     fetchEmployees();
   }, []);
 
-  const handleRowClick = (id) => {
-    navigate(`/viewEmployee/${id}`);
+  const handleUpdateClick = (id) => {
+    navigate(`/updateEmployee/${id}`);
   };
 
-  const handleRetire = async (id) => {
-    const { isConfirmed } = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'This will retire the employee from the active list.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Retire',
-      cancelButtonText: 'Cancel',
+  const handleDeleteClick = async (id) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this employee?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await fetch(`http://localhost:8070/api/v1/employee/deleteEmployee/${id}`, {
+      method: 'DELETE',
     });
 
-    if (!isConfirmed) return;
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to delete employee');
 
-    const { value: retiredDate } = await Swal.fire({
-      title: 'Enter Retirement Date',
-      input: 'date',
-      inputLabel: 'Retired Date',
-      inputPlaceholder: 'Select retired date',
-      inputAttributes: {
-        required: true,
-      },
-      showCancelButton: true,
-    });
+    // Remove deleted employee from the list
+    setEmployees((prev) => prev.filter((emp) => emp._id !== id));
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
-    if (!retiredDate) return;
-
-    try {
-      const res = await fetch(`http://localhost:8070/api/v1/retire/retireEmployee/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ retiredDate })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to retire employee");
-
-      // Remove from UI
-      setEmployees(prev => prev.filter(emp => emp._id !== id));
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Employee retired successfully.',
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: err.message,
-      });
-    }
-  };
 
   return (
     <div className="flex h-screen">
       <SideBar />
-      <main
-        className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
+      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto" style={{ backgroundImage: `url(${bgImage})` }}>
         <div className="absolute inset-0 bg-black/30 z-0" />
         <div className="relative z-10 p-6">
-          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">View Employees</h2>
+          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">Update Employees</h2>
 
           <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-5xl mx-auto">
             {error && (
@@ -104,7 +66,7 @@ const ViewEmployee = () => {
                   <tr className="bg-orange-600 text-white">
                     <th className="py-3 px-4 border-b">#</th>
                     <th className="py-3 px-4 border-b">EPF Number</th>
-                    <th className="py-3 px-4 border-b">Name with Initials</th>
+                    <th className="py-3 px-4 border-b">Name</th>
                     <th className="py-3 px-4 border-b">Welfare Number</th>
                     <th className="py-3 px-4 border-b">Action</th>
                   </tr>
@@ -112,24 +74,21 @@ const ViewEmployee = () => {
                 <tbody>
                   {employees.length > 0 ? (
                     employees.map((emp, index) => (
-                      <tr
-                        key={emp._id}
-                        className="hover:bg-orange-50 cursor-pointer"
-                        onClick={() => handleRowClick(emp._id)}
-                      >
+                      <tr key={emp._id} className="hover:bg-orange-50">
                         <td className="py-2 px-4 border-b">{index + 1}</td>
                         <td className="py-2 px-4 border-b">{emp.epfNumber}</td>
                         <td className="py-2 px-4 border-b">{emp.name}</td>
                         <td className="py-2 px-4 border-b">{emp.welfareNumber}</td>
                         <td className="py-2 px-4 border-b">
                           <button
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleRetire(emp._id);
-                            }}
-                          >
-                            Retire
+                            onClick={() => handleUpdateClick(emp._id)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm mr-5">
+                            Update
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(emp._id)}
+                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+                            Delete
                           </button>
                         </td>
                       </tr>
@@ -152,4 +111,4 @@ const ViewEmployee = () => {
   );
 };
 
-export default ViewEmployee;
+export default UpdateEmployee;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import SideBar from '../Dashboard/SideBar';
-import bgImage from '../../images/background.png';
+import SideBar from '../../Dashboard/SideBar';
+import bgImage from '../../../images/background.png';
 
 const ViewEmployeeById = () => {
   const { id } = useParams();
@@ -64,7 +64,7 @@ const ViewEmployeeById = () => {
                 <Info label="Date Joined" value={employee.dateJoined?.slice(0, 10)} />
                 <Info label="Date Registered" value={employee.dateRegistered?.slice(0, 10)} />
                 <Info label="Welfare Number" value={employee.welfareNumber} />
-                <Info label="Roll" value={employee.roll} />
+                <Info label="role" value={employee.role} />
                 <Info label="Payroll" value={employee.payroll} />
                 <Info label="Division" value={employee.division} />
                 <Info label="Branch" value={employee.branch} />

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import bgImage from '../../images/background.png';
-import SideBar from "../Dashboard/SideBar";
+import bgImage from '../../../images/background.png';
+import SideBar from "../SideBar";
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -38,7 +38,7 @@ const CreateEmployee = () => {
     dateJoined: "",
     dateRegistered: "",
     welfareNumber: "",
-    roll: "",
+    role: "",
     payroll: "",
     division: "",
     branch: "",
@@ -215,8 +215,8 @@ const CreateEmployee = () => {
                     </div>
 
                     <div className="flex flex-col">
-                      <label htmlFor="roll" className="text-sm font-medium text-gray-700 mb-1">Roll<span className="text-red-500">*</span></label>
-                      <input type="text" id="roll" name="roll" value={form.roll} onChange={handleChange}
+                      <label htmlFor="role" className="text-sm font-medium text-gray-700 mb-1">Role<span className="text-red-500">*</span></label>
+                      <input type="text" id="role" name="role" value={form.role} onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400" />
                     </div>
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Users, UserPlus, UserCog, Briefcase  } from 'lucide-react';
-import bgImage from '../../images/background.png';
+import bgImage from '../../../images/background.png';
 import { useNavigate, Link } from 'react-router-dom';
-import SideBar from "../Dashboard/SideBar";
+import SideBar from "../../Dashboard/SideBar";
 
 const ManageEmployees = () => {
   const navigate = useNavigate();

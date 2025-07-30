@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import bgImage from '../../images/background.png';
+import bgImage from '../../../images/background.png';
 import { useNavigate, Link } from 'react-router-dom';
-import SideBar from "../Dashboard/SideBar";
+import SideBar from "../SideBar";
 
 const ViewAdmin = () => {
   const navigate = useNavigate();

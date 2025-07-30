@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bgImage from '../../images/background.png';
+import bgImage from '../../../images/background.png';
 import { Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import SideBar from "../Dashboard/SideBar";
+import SideBar from "../SideBar";
 
 const CreateAdmin = () => {
   const [epfNo, setepfNo] = useState("");

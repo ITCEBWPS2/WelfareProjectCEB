@@ -15,7 +15,7 @@ const useAuth = () => {
   return { user };
 };
 
-// Assuming you have toast notifications setup, e.g., react-hot-toast or similar
+// Assuming you have toast notifications setup, e.g: react-hot-toast or similar
 const toast = {
   success: (message) => console.log("Success:", message),
   error: (message) => console.error("Error:", message),

@@ -2,26 +2,30 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from "./pages/Auth/Login";
-import CreateAdmin from "./pages/Dashboard/CreateAdmin";
-import ViewAdmin from "./pages/Dashboard/ViewAdmin";
-import DeleteAdmin from "./pages/Dashboard/DeleteAdmin";
-import UpdateAdmin from "./pages/Dashboard/UpdateAdmin";
 import Home from "./pages/Dashboard/Home";
 import AuditLog from "./pages/Dashboard/AuditLog";
-import ManageAdmins from './pages/Dashboard/ManageAdmins';
-import ManageEmployees from './pages/Dashboard/ManageEmployees';
+
+import CreateAdmin from "./pages/Dashboard/AdminManagement/CreateAdmin";
+import ViewAdmin from "./pages/Dashboard/AdminManagement/ViewAdmin";
+import DeleteAdmin from "./pages/Dashboard/AdminManagement/DeleteAdmin";
+import UpdateAdmin from "./pages/Dashboard/AdminManagement/UpdateAdmin";
+import ManageAdmins from './pages/Dashboard/AdminManagement/ManageAdmins';
+
+import CreateEmployee from './pages/Dashboard/EmployeeManagement/CreateEmployee';
+import ViewEmployees from './pages/Dashboard/EmployeeManagement/ViewEmployee';
+import ViewEmployeeById from './pages/Dashboard/EmployeeManagement/ViewEmployeeById';
+import UpdateEmployee from './pages/Dashboard/EmployeeManagement/UpdateEmployee';
+import EditEmployeeForm from './pages/Dashboard/EmployeeManagement/EditEmployeeForm';
+import ViewRetiredEmployees from './pages/Dashboard/EmployeeManagement/ViewRetiredEmployees';
+import ManageEmployees from './pages/Dashboard/EmployeeManagement/ManageEmployees';
+
 import LoansManagement from './pages/Dashboard/LoansManagement';
 import DeathFundDashboard from './pages/Dashboard/DeathFundsManagement';
 import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagement';
 import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
 import RefundsDashboard from './pages/Dashboard/RefundsManagement';
 import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
-import CreateEmployee from './pages/Dashboard/CreateEmployee';
-import ViewEmployees from './pages/Dashboard/ViewEmployee';
-import ViewEmployeeById from './pages/Dashboard/ViewEmployeeById';
-import UpdateEmployee from './pages/Dashboard/UpdateEmployee';
-import EditEmployeeForm from './pages/Dashboard/EditEmployeeForm';
-import ViewRetiredEmployees from './pages/Dashboard/ViewRetiredEmployees';
+
 
 function App() {
   return (

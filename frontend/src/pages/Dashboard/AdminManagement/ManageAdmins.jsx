@@ -1,9 +1,9 @@
 import React from 'react';
-import bgImage from '../../images/background.png';
+import bgImage from '../../../images/background.png';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, Users, KeyRound, UserX } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import SideBar from "../Dashboard/SideBar";
+import SideBar from "../SideBar";
 
 
 const ManageAdmins = () => {

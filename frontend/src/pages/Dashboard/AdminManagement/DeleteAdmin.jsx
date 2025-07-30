@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import bgImage from '../../images/background.png';
+import bgImage from '../../../images/background.png';
 import { useNavigate, Link } from 'react-router-dom';
-import SideBar from "./SideBar";
+import SideBar from "../SideBar";
 import Swal from 'sweetalert2';
 
-const UpdateAdmin = () => {
+const DeleteAdmin = () => {
   const navigate = useNavigate();
   const [admins, setAdmins] = useState([]);
   const [error, setError] = useState("");
@@ -24,65 +24,48 @@ const UpdateAdmin = () => {
     }
   };
 
-    const handleEditAdmin = async (admin) => {
-    const { value: formValues } = await Swal.fire({
-      title: 'Edit Admin',
-      html: `
-        <input id="swal-epf" class="swal2-input" placeholder="EPF Number" value="${admin.epfNo}">
-        <input id="swal-username" class="swal2-input" placeholder="Username" value="${admin.username}">
-        <input id="swal-password" class="swal2-input" placeholder="New Password (optional)" type="password">
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: 'Update',
-      preConfirm: () => {
-        return {
-          epfNo: document.getElementById('swal-epf').value,
-          username: document.getElementById('swal-username').value,
-          password: document.getElementById('swal-password').value,
-        };
-      }
+  const handleDelete = async (adminId) => {
+  const confirm = window.confirm("Are you sure you want to delete this admin?");
+  if (!confirm) return;
+
+  try {
+    const res = await fetch(`http://localhost:8070/api/v1/admin/deleteAdmin/${adminId}`, {
+      method: "DELETE",
     });
 
-    if (!formValues) return;
+    const contentType = res.headers.get("content-type");
 
-    try {
-      const res = await fetch(`http://localhost:8070/api/v1/admin/updateAdmin/${admin._id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formValues)
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update admin");
-
-      Swal.fire({
-        title: 'Updated!',
-        text: 'Admin information updated successfully.',
-        icon: 'success',
-        confirmButtonColor: '#f97316',
-      });
-
-      // Optional: refresh the admin list
-      fetchAdmins();
-    } catch (err) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Update Failed',
-        text: err.message,
-        confirmButtonColor: '#dc2626',
-      });
+    if (!res.ok) {
+      const errorMsg = contentType.includes("application/json")
+        ? (await res.json()).message
+        : "Unexpected server error or HTML response.";
+      throw new Error(errorMsg);
     }
-  };
+
+    // ✅ Show SweetAlert2 popup
+    await Swal.fire({
+      title: 'Success!',
+      text: 'Admin deleted successfully!',
+      icon: 'success',
+      confirmButtonColor: '#f97316',
+      confirmButtonText: 'Go to Manage Admins',
+    });
+
+    navigate('/deleteAdmin');
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
 
   return (
     <div className="flex h-screen">
       <SideBar />
+
       <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto" style={{ backgroundImage: `url(${bgImage})` }}>
         <div className="absolute inset-0 bg-black/30 z-0" />
         <div className="relative z-10 p-6">
-          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">Update Admin</h2>
+          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">Delete Admins</h2>
 
           <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-5xl mx-auto">
             {error && (
@@ -110,10 +93,10 @@ const UpdateAdmin = () => {
                         <td className="py-2 px-4 border-b">{admin.username}</td>
                         <td className="py-2 px-4 border-b">
                           <button
-                            onClick={() => handleEditAdmin(admin)}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                            onClick={() => handleDelete(admin._id)}
+                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
                           >
-                           Update
+                            Delete
                           </button>
                         </td>
                       </tr>
@@ -139,4 +122,4 @@ const UpdateAdmin = () => {
   );
 };
 
-export default UpdateAdmin;
+export default DeleteAdmin;

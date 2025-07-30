@@ -19,7 +19,7 @@ const employeeSchema = new mongoose.Schema(
     dateJoined: { type: Date, required: true },
     dateRegistered: { type: Date, required: true },
     welfareNumber: { type: String, required: true},
-    roll: { type: String, required: true },
+    role: { type: String, required: true },
     payroll: { type: String, required: true },
     division: { type: String, required: true },
     branch: { type: String, required: true },
