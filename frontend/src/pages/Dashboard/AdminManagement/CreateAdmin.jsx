@@ -10,6 +10,7 @@ const CreateAdmin = () => {
   const [epfNo, setepfNo] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const CreateAdmin = () => {
   if (!epfNo) return setError("Enter your EPF Number");
   if (!username) return setError("Enter a username");
   if (!password) return setError("Enter a password");
+  if (!role) return setError("Enter a role");
   setError("");
 
   try {
@@ -28,7 +30,7 @@ const CreateAdmin = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ epfNo, username, password }),
+      body: JSON.stringify({ epfNo, username, password, role }),
     });
 
     const data = await res.json();
@@ -100,6 +102,16 @@ const CreateAdmin = () => {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                  <input
+                    type="text"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                     required
                   />

@@ -49,7 +49,7 @@ const ViewAdmin = () => {
                     <th className="py-3 px-4 border-b">#</th>
                     <th className="py-3 px-4 border-b">EPF Number</th>
                     <th className="py-3 px-4 border-b">Username</th>
-                    {/* <th className="py-3 px-4 border-b">Role</th> */}
+                    <th className="py-3 px-4 border-b">Role</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@ const ViewAdmin = () => {
                         <td className="py-2 px-4 border-b">{index + 1}</td>
                         <td className="py-2 px-4 border-b">{admin.epfNo}</td>
                         <td className="py-2 px-4 border-b">{admin.username}</td>
-                        {/* <td className="py-2 px-4 border-b">{admin.role || "Admin"}</td> */}
+                        <td className="py-2 px-4 border-b">{admin.role}</td>
                       </tr>
                     ))
                   ) : (

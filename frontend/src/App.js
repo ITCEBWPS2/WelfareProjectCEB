@@ -19,12 +19,17 @@ import EditEmployeeForm from './pages/Dashboard/EmployeeManagement/EditEmployeeF
 import ViewRetiredEmployees from './pages/Dashboard/EmployeeManagement/ViewRetiredEmployees';
 import ManageEmployees from './pages/Dashboard/EmployeeManagement/ManageEmployees';
 
-import LoansManagement from './pages/Dashboard/LoansManagement';
+import LoansManagement from './pages/Dashboard/LoanManagement/LoansManagement';
+import CreateLoan from './pages/Dashboard/LoanManagement/CreateLoan';
+import ViewLoans from './pages/Dashboard/LoanManagement/ViewLoan';
+
+
 import DeathFundDashboard from './pages/Dashboard/DeathFundsManagement';
 import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagement';
 import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
 import RefundsDashboard from './pages/Dashboard/RefundsManagement';
 import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
+import EditAdminForm from './pages/Dashboard/AdminManagement/EditAdminForm';
 
 
 function App() {
@@ -43,6 +48,7 @@ function App() {
             <Route path="/viewAdmin" element={<ViewAdmin/>}/>
             <Route path="/deleteAdmin" element={<DeleteAdmin/>}/>
             <Route path="/updateAdmin" element={<UpdateAdmin/>}/>
+            <Route path="/updateAdmin/:id" element={<EditAdminForm />} />
             
 
             {/* Employee  Routes */}
@@ -54,8 +60,12 @@ function App() {
             <Route path="/updateEmployee/:id" element={<EditEmployeeForm />} />
             <Route path="/viewRetiredEmployees" element={<ViewRetiredEmployees />} />
 
-            
+            {/* Loan Management */}
             <Route path="/loansManagement" element={<LoansManagement/>}/>
+            <Route path="/createLoan" element={<CreateLoan/>}/>
+            <Route path="/viewLoans" element={<ViewLoans />} />
+
+            
             <Route path="/deathFundDashboard" element={<DeathFundDashboard/>}/>
             <Route path="/retirementGiftsDashboard" element={<RetirementGiftsDashboard/>}/>
             <Route path="/scholarships" element={<Scholarships/>}/>

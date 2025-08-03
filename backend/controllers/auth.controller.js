@@ -34,9 +34,9 @@ exports.loginAdmin = async (req, res) => {
 
 // Create Admin
 exports.createAdmin = async (req, res) => {
-  const { epfNo, username, password } = req.body;
+  const { epfNo, username, password, role } = req.body;
 
-  if (!epfNo || !username || !password) {
+  if (!epfNo || !username || !password || !role) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -46,12 +46,13 @@ exports.createAdmin = async (req, res) => {
       return res.status(400).json({ message: "Username already exists" });
     }
 
-    const admin = await Admin.create({ epfNo, username, password });
+    const admin = await Admin.create({ epfNo, username, password, role });
 
     res.status(201).json({
       id: admin._id,
       epfNo: admin.epfNo,
       username: admin.username,
+      role: admin.role,
       token: generateToken(admin._id),
     });
   } catch (err) {

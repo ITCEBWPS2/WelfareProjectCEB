@@ -41,3 +41,6 @@ app.use("/api/v1/employee", employeeRoutes);
 
 const retireRoutes = require("./routes/retireRoutes");
 app.use("/api/v1/retire", retireRoutes);
+
+const loanRoutes = require("./routes/loanRoutes");
+app.use("/api/v1/loans", loanRoutes);

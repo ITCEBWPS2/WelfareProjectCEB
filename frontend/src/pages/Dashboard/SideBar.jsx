@@ -1,12 +1,16 @@
-import React from 'react'
-import { useNavigate} from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../images/logo.png';
 
 const SideBar = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
+   
+  // Assuming the username is stored in localStorage
+  const username = localStorage.getItem("username") || "User";  // Replace with your authentication logic
 
-const handleLogout = () => {
+  const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem("username");  // Clear username or token
       navigate('/');
     }
   };
@@ -24,10 +28,16 @@ const handleLogout = () => {
             />
 
             {/* Title */}
-            <h1 className="text-xl font-bold text-gray-800 leading-tight pb-10">
+            <h1 className="text-xl font-bold text-gray-800 leading-tight pb-2">
               CEB WELFARE <br /> WPS II
             </h1>
+
+            {/* User Greeting */}
+            <h2 className="text-lg font-medium text-gray-600 mt-4">
+              Hi {username} !!
+            </h2>
           </div>
+
           <nav>
             <h2 className="text-xl text-gray-700 font-bold uppercase mb-2">Dashboard</h2>
             <ul className="mb-4 space-y-2">
@@ -48,13 +58,14 @@ const handleLogout = () => {
               </li>
             </ul>
           </nav>
-        </div><br></br>
+        </div>
+        <br />
         <div className="pt-24 pb-18">
           <button onClick={handleLogout} className="w-full text-left px-7 py-2 rounded-md bg-green-500 text-black hover:bg-green-600 transition text-xl text-center font-bold">Logout</button>
         </div>
       </aside>
     </div>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;
