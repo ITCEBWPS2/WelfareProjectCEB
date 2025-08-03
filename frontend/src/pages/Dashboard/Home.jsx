@@ -1,14 +1,14 @@
-import React from 'react';
-import {
-  FileText,
-  Gift,
-  HeartPulse,
-  GraduationCap,
-  HandCoins,
-} from 'lucide-react';
-import bgImage from '../../images/background.png';
-import { useNavigate } from 'react-router-dom';
-import SideBar from "../Dashboard/SideBar";
+  import React from 'react';
+  import {
+    FileText,
+    Gift,
+    HeartPulse,
+    GraduationCap,
+    HandCoins,
+  } from 'lucide-react';
+  import bgImage from '../../images/background.png';
+  import { useNavigate } from 'react-router-dom';
+  import SideBar from '../Dashboard/SideBar';
 
   const Home = () => {
     const navigate = useNavigate();
@@ -52,7 +52,12 @@ import SideBar from "../Dashboard/SideBar";
       },
     ];
 
-    
+    const handleLogout = () => {
+      const confirmLogout = window.confirm("Are you sure you want to log out?");
+      if (confirmLogout) {
+        navigate('/');
+      }
+    };
 
   return (
     <div className="flex h-screen">

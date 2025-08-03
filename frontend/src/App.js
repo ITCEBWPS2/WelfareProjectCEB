@@ -29,8 +29,15 @@ import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagemen
 import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
 import RefundsDashboard from './pages/Dashboard/RefundsManagement';
 import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
+
 import EditAdminForm from './pages/Dashboard/AdminManagement/EditAdminForm';
 
+import LoanApplication from './pages/Applications/LoanApplication';
+import DeathFundForm from './pages/Applications/DeathFundApplication';
+import RetirementForm from './pages/Applications/RetirementGiftApplication';
+import ScholarshipForm from './pages/Applications/ScholarshipApplication';
+import RefundForm from './pages/Applications/RefundsApplication';
+import MedicalForm from './pages/Applications/MedicalApplication';
 
 function App() {
   return (
@@ -71,6 +78,12 @@ function App() {
             <Route path="/scholarships" element={<Scholarships/>}/>
             <Route path="/refundsDashboard" element={<RefundsDashboard/>}/>
             <Route path="/medicalsDashboard" element={<MedicalsDashboard/>}/>
+            <Route path="/loanApplication" element={<LoanApplication/>}/>
+            <Route path="/deathFundForm" element={<DeathFundForm/>}/>
+            <Route path="/retirementForm" element={<RetirementForm/>}/>
+            <Route path="/scholarshipForm" element={<ScholarshipForm/>}/>
+            <Route path="/refundForm" element={<RefundForm/>}/>
+            <Route path="/medicalForm" element={<MedicalForm/>}/>
         </Routes>
       </Router>
       

@@ -2,12 +2,13 @@ import React, { useEffect, useState, createContext, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import bgImage from '../../images/background.png';
+import RefundForm from '../Applications/RefundsApplication';
 
 const AuthContext = createContext(null);
 const useAuth = () => {
     const [user, setUser] = useState(null);
     useEffect(() => {
-        setUser({ role: 'SuperAdmin', uid: 'mock-user-id' }); // Example: Set to SuperAdmin for testing
+        setUser({ role: 'SuperAdmin', uid: 'mock-user-id' });
     }, []);
     return { user };
 };
@@ -24,69 +25,9 @@ const isTreasurerOrAssistantTreasurer = (user) =>
 const SquarePen = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>;
 const Trash2 = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>;
 
-const DialogContext = React.createContext();
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
 
-const Dialog = ({ children }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const openDialog = () => setIsOpen(true);
-    const closeDialog = () => setIsOpen(false);
-
-    return (
-        <DialogContext.Provider value={{ isOpen, openDialog, closeDialog }}>
-            {React.Children.map(children, child => {
-                if (child.type === DialogTrigger) {
-                    return React.cloneElement(child, { onClick: openDialog });
-                }
-                if (child.type === DialogContent) {
-                    return isOpen ? React.cloneElement(child, { onClose: closeDialog }) : null;
-                }
-                return child;
-            })}
-        </DialogContext.Provider>
-    );
-};
-
-const DialogTrigger = ({ children, onClick }) => (
-    <span onClick={onClick} className="cursor-pointer">
-        {children}
-    </span>
-);
-
-const DialogContent = ({ children, onClose, className }) => (
-    <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 ${className}`}>
-        <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg relative">
-            <button
-                onClick={onClose}
-                className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
-            >
-                &times;
-            </button>
-            {children}
-        </div>
-    </div>
-);
-
-const DialogHeader = ({ children, className }) => (
-    <div className={`mb-4 ${className}`}>
-        {children}
-    </div>
-);
-
-const DialogTitle = ({ children, className }) => (
-    <h2 className={`text-xl font-semibold ${className}`}>
-        {children}
-    </h2>
-);
-
-const DialogDescription = ({ children, className }) => (
-    <p className={`text-sm text-gray-600 ${className}`}>
-        {children}
-    </p>
-);
-
-const BASE_URL = "http://localhost:5000"; // IMPORTANT: Replace with your actual backend URL
-
-const RefundsTable = ({ tableTitle }) => {
+const RefundsTable = ({ tableTitle, onRefundAdded }) => {
     const [refunds, setRefunds] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showRefundDetailsDialog, setShowRefundDetailsDialog] = useState(false);
@@ -99,13 +40,19 @@ const RefundsTable = ({ tableTitle }) => {
         fetchRefunds();
     }, []);
 
+    useEffect(() => {
+        if (onRefundAdded) {
+            fetchRefunds();
+        }
+    }, [onRefundAdded]);
+
+
     const fetchRefunds = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${BASE_URL}/api/refunds`, { // Changed API endpoint
+            const response = await axios.get(`${BASE_URL}/api/refunds`, {
                 withCredentials: true,
             });
-
             setRefunds(response.data);
         } catch (error) {
             console.error("Error fetching refunds:", error);
@@ -165,8 +112,8 @@ const RefundsTable = ({ tableTitle }) => {
                             {[
                                 "EPF Number",
                                 "Amount",
-                                "Reason", 
-                                "Message", 
+                                "Reason",
+                                "Message",
                                 "Actions",
                             ].map((header) => (
                                 <th
@@ -181,7 +128,7 @@ const RefundsTable = ({ tableTitle }) => {
                     <tbody>
                         {refunds.length === 0 ? (
                             <tr>
-                                <td colSpan="5" className="text-center py-4 text-gray-500"> {/* Adjusted colspan */}
+                                <td colSpan="5" className="text-center py-4 text-gray-500">
                                     {loading ? "Loading refunds..." : "No refunds found."}
                                 </td>
                             </tr>
@@ -195,10 +142,10 @@ const RefundsTable = ({ tableTitle }) => {
                                         {refund.amount}
                                     </td>
                                     <td className="px-4 py-2 text-sm whitespace-nowrap text-gray-800">
-                                        {refund.reason || "N/A"} 
+                                        {refund.reason || "N/A"}
                                     </td>
                                     <td className="px-4 py-2 text-sm whitespace-nowrap text-gray-800">
-                                        {refund.message || "N/A"} 
+                                        {refund.message || "N/A"}
                                     </td>
                                     <td className="px-4 py-2 text-sm whitespace-nowrap text-gray-800">
                                         <div className="flex space-x-2 items-center">
@@ -218,7 +165,6 @@ const RefundsTable = ({ tableTitle }) => {
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             )}
-                                            {/* View User (Member) Details */}
                                             <button
                                                 onClick={() => fetchMemberId(refund.epfNumber)}
                                                 className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-3 py-1.5 text-xs font-medium transition-colors duration-200"
@@ -235,34 +181,38 @@ const RefundsTable = ({ tableTitle }) => {
             </div>
 
             {showRefundDetailsDialog && currentRefundDetails && (
-                <Dialog>
-                    <DialogContent onClose={() => setShowRefundDetailsDialog(false)} className="max-w-xl">
-                        <DialogHeader className="border-b pb-4 mb-4">
-                            <DialogTitle className="text-2xl font-bold text-gray-800">
-                                Refund Details
-                            </DialogTitle>
-                            <DialogDescription className="text-gray-600">
-                                Details of the selected refund entry.
-                            </DialogDescription>
-                        </DialogHeader>
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg relative">
+                        <button
+                            onClick={() => setShowRefundDetailsDialog(false)}
+                            className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+                        >
+                            &times;
+                        </button>
+                        <h2 className="text-2xl font-bold text-gray-800 border-b pb-4 mb-4">
+                            Refund Details
+                        </h2>
+                        <p className="text-gray-600 mb-4">Details of the selected refund entry.</p>
                         <div className="py-2 text-gray-700 space-y-3 text-sm grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
                             <p><strong>EPF Number:</strong> {currentRefundDetails.epfNumber || "N/A"}</p>
                             <p><strong>Amount:</strong> {currentRefundDetails.amount || "N/A"}</p>
-                            <p><strong>Reason:</strong> {currentRefundDetails.reason || "N/A"}</p> {/* Display Reason */}
-                            <p><strong>Message:</strong> {currentRefundDetails.message || "N/A"}</p> {/* Display Message */}
+                            <p><strong>Reason:</strong> {currentRefundDetails.reason || "N/A"}</p>
+                            <p><strong>Message:</strong> {currentRefundDetails.message || "N/A"}</p>
                             <p><strong>Date:</strong> {currentRefundDetails.date ? new Date(currentRefundDetails.date).toLocaleDateString("en-GB") : "N/A"}</p>
                         </div>
-                    </DialogContent>
-                </Dialog>
+                    </div>
+                </div>
             )}
         </div>
     );
 };
 
 
-const RefundsDashboard = () => { // Renamed component
+const RefundsDashboard = () => {
     const navigate = useNavigate();
-    const [tableTitle, setTableTitle] = useState("Refunds"); // Changed table title
+    const [tableTitle] = useState("Refunds");
+    const [showNewRefundForm, setShowNewRefundForm] = useState(false);
+    const [refundAdded, setRefundAdded] = useState(false);
 
     const handleLogout = () => {
         if (window.confirm("Are you sure you want to log out?")) {
@@ -270,8 +220,14 @@ const RefundsDashboard = () => { // Renamed component
         }
     };
 
-    const handleNewRefund = () => { // Renamed function
-        navigate("/dashboard/refunds/add"); // Changed navigation path
+    const handleNewRefund = () => {
+        setShowNewRefundForm(true);
+        setRefundAdded(false);
+    };
+
+    const handleCloseRefundForm = () => {
+        setShowNewRefundForm(false);
+        setRefundAdded(true);
     };
 
     return (
@@ -331,7 +287,6 @@ const RefundsDashboard = () => { // Renamed component
                 </div>
             </aside>
 
-            {/* Main Content */}
             <main
                 className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
                 style={{ backgroundImage: `url(${bgImage})` }}
@@ -339,25 +294,28 @@ const RefundsDashboard = () => { // Renamed component
                 <div className="absolute inset-0 bg-black/30 z-0" />
                 <div className="relative z-10 p-6 min-h-screen">
                     <h1 className="text-3xl font-bold text-white mb-6 drop-shadow">
-                        Refunds Management 
+                        Refunds Management
                     </h1>
 
                     <div className="flex flex-col md:flex-row justify-between items-center mt-20 mb-6 space-y-4 md:space-y-0 md:space-x-4 max-w-7xl mx-auto">
                         <button
-                            onClick={handleNewRefund} 
+                            onClick={handleNewRefund}
                             className="px-6 py-2 rounded-full text-m font-medium transition-all duration-300
-                                         bg-green-600 text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 w-full md:w-auto"
+                                         bg-green-600 text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full md:w-auto"
                         >
-                            + New Refund 
+                            + New Refund
                         </button>
                     </div>
 
-                    {/* Refunds Table */}
-                    <RefundsTable tableTitle={tableTitle} /> {/* Changed component name */}
+                    <RefundsTable tableTitle={tableTitle} onRefundAdded={refundAdded} />
+
+                    {showNewRefundForm && (
+                        <RefundForm onClose={handleCloseRefundForm} />
+                    )}
                 </div>
             </main>
         </div>
     );
 };
 
-export default RefundsDashboard; 
+export default RefundsDashboard;
