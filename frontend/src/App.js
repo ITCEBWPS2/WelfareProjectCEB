@@ -47,7 +47,7 @@ function App() {
             <Route path="/" element={<Root />}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/dashboard" element={<Home/>}/>
-            <Route path="/auditLog" element={<AuditLog/>}/>
+            <Route path="/logs" element={<AuditLog/>}/>
 
              {/* Admin Routes */}
             <Route path="/manageAdmins" element={<ManageAdmins/>}/>

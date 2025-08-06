@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate} from 'react-router-dom';
 import Swal from "sweetalert2";
+import logo from '../../images/logo.png';
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const handleLogout = async () => {
                 <button onClick={() => navigate('/dashboard')} className="w-full text-left px-7 py-2 rounded-md text-gray-700 hover:bg-blue-100 transition text-lg">Dashboard</button>
               </li>
               <li>
-                <button onClick={() => navigate('/auditLog')} className="w-full text-left px-7 py-2 rounded-md text-gray-700 hover:bg-blue-100 transition text-lg">Audit Logs</button>
+                <button onClick={() => navigate('/logs')} className="w-full text-left px-7 py-2 rounded-md text-gray-700 hover:bg-blue-100 transition text-lg">Audit Logs</button>
               </li>
             </ul>
             <h2 className="text-xl text-gray-700 font-bold uppercase mb-2">Admin Options</h2>

@@ -5,14 +5,19 @@ const cors = require('cors');
 const dotenv = require("dotenv");
 
 const app = express();
+
+
+app.set("trust proxy", true);
 dotenv.config();
 
 app.use(express.json());
 
 const PORT = process.env.PORT || 8070;
 
-app.use(cors());
-// app.use(bodyParser.json());
+app.use(cors({
+  origin: "http://localhost:3000", // 👈 your frontend origin
+  credentials: true,               // 👈 allow cookies/auth headers
+}));
 
 const URL = process.env.MONGODB_URL;
 
@@ -26,7 +31,7 @@ connection.once("open", () =>  {
     console.log("✅ MongoDB connection successful !!");
 })
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0',() => {
     console.log(`🚀 Server is up and running on port ${PORT}`)
 })
 
@@ -44,3 +49,6 @@ app.use("/api/v1/retire", retireRoutes);
 
 const loanRoutes = require("./routes/loanRoutes");
 app.use("/api/v1/loans", loanRoutes);
+
+const logRoutes = require("./routes/logRoutes");
+app.use("/api/v1/logs", logRoutes);
