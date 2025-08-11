@@ -14,6 +14,7 @@ const CreateLoan = () => {
     role: "",
     reason: "",
     loanDate: "",
+    status: 'pending'
   });
 
   const navigate = useNavigate();

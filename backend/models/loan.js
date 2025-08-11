@@ -8,12 +8,12 @@ const loanSchema = new mongoose.Schema({
   loanAmount: { type: Number, required: true }, // in rupees
   role: { type: String, required: true },
   reason: { type: String, required: true },
-  loanDate: { type: Date, required: true }
-  // status: {
-  //   type: String,
-  //   enum: ['pending', 'approved', 'rejected'],
-  //   default: 'pending',
-  // }
+  loanDate: { type: Date, required: true },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  }
 }, {
   timestamps: true,
 });

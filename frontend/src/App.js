@@ -21,7 +21,11 @@ import ManageEmployees from './pages/Dashboard/EmployeeManagement/ManageEmployee
 
 import LoansManagement from './pages/Dashboard/LoanManagement/LoansManagement';
 import CreateLoan from './pages/Dashboard/LoanManagement/CreateLoan';
-import ViewLoans from './pages/Dashboard/LoanManagement/ViewLoan';
+// import ViewLoans from './pages/Dashboard/LoanManagement/ViewLoan';
+import ViewAllLoans from './pages/Dashboard/LoanManagement/ViewAllLoans';
+import ViewPendingLoans from './pages/Dashboard/LoanManagement/ViewPendingLoans';
+import ViewApprovedLoans from './pages/Dashboard/LoanManagement/ViewApprovedLoans';
+import ViewRejectedLoans from './pages/Dashboard/LoanManagement/ViewRejectedLoans';
 
 
 import DeathFundDashboard from './pages/Dashboard/DeathFundsManagement';
@@ -70,7 +74,12 @@ function App() {
             {/* Loan Management */}
             <Route path="/loansManagement" element={<LoansManagement/>}/>
             <Route path="/createLoan" element={<CreateLoan/>}/>
-            <Route path="/viewLoans" element={<ViewLoans />} />
+            {/* <Route path="/viewLoans" element={<ViewLoans />} /> */}
+            <Route path="/viewLoans" element={<ViewAllLoans />} />
+            <Route path="/viewLoans/pending" element={<ViewPendingLoans />} />
+            <Route path="/viewLoans/approved" element={<ViewApprovedLoans />} />
+            <Route path="/viewLoans/rejected" element={<ViewRejectedLoans />} />
+
 
             
             <Route path="/deathFundDashboard" element={<DeathFundDashboard/>}/>
