@@ -1,5 +1,6 @@
-const Employee = require("../models/Employee");
+const Employee = require("../models/employee");
 const RetiredEmployee = require("../models/RetiredEmployee");
+const Logger = require("../utils/Logger");
 
 exports.viewEmployees = async (req, res) => {
   try {
@@ -21,7 +22,9 @@ exports.viewEmployees = async (req, res) => {
 
 exports.viewEmployeeById = async (req, res) => {
   try {
+    console.log("Fetching employee with ID:", req.params.id);
     const employee = await Employee.findById(req.params.id);
+    console.log("Employee found:", employee);
     if (!employee) {
       await Logger.warn("com.ceb.employee.viewById", "Employee not found", req.user?._id || null, {
         employeeId: req.params.id,

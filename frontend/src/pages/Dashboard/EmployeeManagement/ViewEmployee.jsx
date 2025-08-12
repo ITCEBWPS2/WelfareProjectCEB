@@ -25,6 +25,7 @@ const ViewEmployee = () => {
   }, []);
 
   const handleRowClick = (id) => {
+    // Navigate to employee detail page using hidden _id
     navigate(`/viewEmployee/${id}`);
   };
 
@@ -65,7 +66,7 @@ const ViewEmployee = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to retire employee");
 
-      // Remove from UI
+      // Remove retired employee from state to update UI
       setEmployees(prev => prev.filter(emp => emp._id !== id));
 
       Swal.fire({
@@ -89,6 +90,7 @@ const ViewEmployee = () => {
         className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black/30 z-0" />
         <div className="relative z-10 p-6">
           <h2 className="text-3xl font-bold text-white drop-shadow mb-6">View Employees</h2>
@@ -118,14 +120,14 @@ const ViewEmployee = () => {
                         onClick={() => handleRowClick(emp._id)}
                       >
                         <td className="py-2 px-4 border-b">{index + 1}</td>
-                        <td className="py-2 px-4 border-b">{emp.epfNumber}</td>
-                        <td className="py-2 px-4 border-b">{emp.name}</td>
-                        <td className="py-2 px-4 border-b">{emp.welfareNumber}</td>
+                        <td className="py-2 px-4 border-b">{emp.epfNumber || '-'}</td>
+                        <td className="py-2 px-4 border-b">{emp.name || '-'}</td>
+                        <td className="py-2 px-4 border-b">{emp.welfareNumber || '-'}</td>
                         <td className="py-2 px-4 border-b">
                           <button
                             className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
                             onClick={(e) => {
-                              e.stopPropagation();
+                              e.stopPropagation(); // Prevent row click
                               handleRetire(emp._id);
                             }}
                           >
@@ -146,7 +148,9 @@ const ViewEmployee = () => {
             </div>
           </div>
         </div>
-        <Link to="/manageEmployees" className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline">Back</Link>
+        <Link to="/manageEmployees" className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline">
+          Back
+        </Link>
       </main>
     </div>
   );

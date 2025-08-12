@@ -47,12 +47,12 @@ const ViewEmployeeById = () => {
             <section>
               <h3 className="text-xl font-semibold text-orange-600 mb-4">Personal Information</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <Info label="Salutation" value={employee.salutation} />
-                <Info label="Name with Initials" value={employee.name} />
-                <Info label="Email" value={employee.email} />
-                <Info label="Date of Birth" value={employee.dateOfBirth?.slice(0, 10)} />
-                <Info label="WhatsApp Number" value={employee.whatsappNumber} />
-                <Info label="Contact Number" value={employee.contactNumber} />
+                <Info label="Salutation" value={employee?.salutation} />
+                <Info label="Name with Initials" value={employee?.name} />
+                <Info label="Email" value={employee?.email} />
+                <Info label="Date of Birth" value={employee?.dateOfBirth?.slice(0, 10)} />
+                <Info label="WhatsApp Number" value={employee?.whatsappNumber} />
+                <Info label="Contact Number" value={employee?.contactNumber} />
               </div>
             </section>
 
@@ -60,15 +60,15 @@ const ViewEmployeeById = () => {
             <section>
               <h3 className="text-xl font-semibold text-orange-600 mb-4">Work Information</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <Info label="EPF Number" value={employee.epfNumber} />
-                <Info label="Date Joined" value={employee.dateJoined?.slice(0, 10)} />
-                <Info label="Date Registered" value={employee.dateRegistered?.slice(0, 10)} />
-                <Info label="Welfare Number" value={employee.welfareNumber} />
-                <Info label="role" value={employee.role} />
-                <Info label="Payroll" value={employee.payroll} />
-                <Info label="Division" value={employee.division} />
-                <Info label="Branch" value={employee.branch} />
-                <Info label="Unit" value={employee.unit} />
+                <Info label="EPF Number" value={employee?.epfNumber} />
+                <Info label="Date Joined" value={employee?.dateJoined?.slice(0, 10)} />
+                <Info label="Date Registered" value={employee?.dateRegistered?.slice(0, 10)} />
+                <Info label="Welfare Number" value={employee?.welfareNumber} />
+                <Info label="Role" value={employee?.role} />
+                <Info label="Payroll" value={employee?.payroll} />
+                <Info label="Division" value={employee?.division} />
+                <Info label="Branch" value={employee?.branch} />
+                <Info label="Unit" value={employee?.unit} />
               </div>
             </section>
 
@@ -76,19 +76,19 @@ const ViewEmployeeById = () => {
             <section>
               <h3 className="text-xl font-semibold text-orange-600 mb-4">Spouse Information</h3>
               <div className="grid grid-cols-2 gap-4">
-                <Info label="Spouse Name" value={employee.spouse?.name || "-"} />
-                <Info label="Spouse Date of Birth" value={employee.spouse?.dateOfBirth?.slice(0, 10) || "-"} />
+                <Info label="Spouse Name" value={employee?.spouse?.name} />
+                <Info label="Spouse Date of Birth" value={employee?.spouse?.dateOfBirth?.slice(0, 10)} />
               </div>
             </section>
 
             {/* Children */}
             <section>
               <h3 className="text-xl font-semibold text-orange-600 mb-4">Children</h3>
-              {employee.children.length > 0 ? (
+              {employee?.children?.length > 0 ? (
                 <ul className="space-y-2">
                   {employee.children.map((c, i) => (
                     <li key={i} className="bg-gray-50 border p-2 rounded-lg">
-                      👶 {c.name} | {c.gender} | {c.dateOfBirth?.slice(0, 10)}
+                      👶 {c?.name || "-"} | {c?.gender || "-"} | {c?.dateOfBirth?.slice(0, 10) || "-"}
                     </li>
                   ))}
                 </ul>
@@ -101,14 +101,14 @@ const ViewEmployeeById = () => {
             <section>
               <h3 className="text-xl font-semibold text-orange-600 mb-4">Parents</h3>
               <div className="grid grid-cols-2 gap-4">
-                <Info label="Mother's Name" value={employee.mother.name} />
-                <Info label="Mother's Date of Birth" value={employee.mother.dateOfBirth?.slice(0, 10)} />
-                <Info label="Father's Name" value={employee.father.name} />
-                <Info label="Father's Date of Birth" value={employee.father.dateOfBirth?.slice(0, 10)} />
-                <Info label="Mother-in-Law's Name" value={employee.motherInLaw?.name || "-"} />
-                <Info label="Mother-in-Law's Date of Birth" value={employee.motherInLaw?.dateOfBirth?.slice(0, 10) || "-"} />
-                <Info label="Father-in-Law's Name" value={employee.fatherInLaw?.name || "-"} />
-                <Info label="Father-in-Law's Date of Birth" value={employee.fatherInLaw?.dateOfBirth?.slice(0, 10) || "-"} />
+                <Info label="Mother's Name" value={employee?.mother?.name} />
+                <Info label="Mother's Date of Birth" value={employee?.mother?.dateOfBirth?.slice(0, 10)} />
+                <Info label="Father's Name" value={employee?.father?.name} />
+                <Info label="Father's Date of Birth" value={employee?.father?.dateOfBirth?.slice(0, 10)} />
+                <Info label="Mother-in-Law's Name" value={employee?.motherInLaw?.name} />
+                <Info label="Mother-in-Law's Date of Birth" value={employee?.motherInLaw?.dateOfBirth?.slice(0, 10)} />
+                <Info label="Father-in-Law's Name" value={employee?.fatherInLaw?.name} />
+                <Info label="Father-in-Law's Date of Birth" value={employee?.fatherInLaw?.dateOfBirth?.slice(0, 10)} />
               </div>
             </section>
           </div>

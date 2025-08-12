@@ -1,46 +1,49 @@
 const mongoose = require("mongoose");
 
-const childSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  dateOfBirth: { type: Date, required: true },
-  gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
-}, { _id: false });
+const childSchema = new mongoose.Schema(
+  {
+    name: { type: String },
+    dateOfBirth: { type: Date },
+    gender: { type: String, enum: ["Male", "Female", "Other"] },
+  },
+  { _id: false }
+);
 
 const employeeSchema = new mongoose.Schema(
   {
     // Basic Info
-    salutation: { type: String, enum: ['Mr', 'Mrs', 'Ms'], required: true },
+    salutation: { type: String, enum: ["Mr.", "Mrs.", "Ms."], required: true },
     name: { type: String, required: true },
-    email: { type: String, required: true },
-    dateOfBirth: { type: Date, required: true },
+    email: { type: String },
+    dateOfBirth: { type: Date },
 
     // Work Info
     epfNumber: { type: String, required: true, unique: true },
-    dateJoined: { type: Date, required: true },
-    dateRegistered: { type: Date, required: true },
-    welfareNumber: { type: String, required: true},
-    role: { type: String, required: true },
-    payroll: { type: String, required: true },
-    division: { type: String, required: true },
-    branch: { type: String, required: true },
-    unit: { type: String, required: true },
+    dateJoined: { type: Date },
+    dateRegistered: { type: Date },
+    welfareNumber: { type: String, required: true },
+    role: { type: String },
+    payroll: { type: String },
+    division: { type: String },
+    branch: { type: String },
+    unit: { type: String },
     whatsappNumber: { type: String },
-    contactNumber: { type: String, required: true },
-    retiredDate: { type: Date }, // 👈 add this field
+    contactNumber: { type: String },
+    retiredDate: { type: Date }, // 👈 added
+
     // Family Info
     spouse: {
       name: { type: String },
       dateOfBirth: { type: Date },
     },
     children: [childSchema],
-
     mother: {
-      name: { type: String, required: true },
-      dateOfBirth: { type: Date, required: true },
+      name: { type: String },
+      dateOfBirth: { type: Date },
     },
     father: {
-      name: { type: String, required: true },
-      dateOfBirth: { type: Date, required: true },
+      name: { type: String },
+      dateOfBirth: { type: Date },
     },
     motherInLaw: {
       name: { type: String },
@@ -53,7 +56,9 @@ const employeeSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-module.exports = mongoose.model("Employee", employeeSchema);
+// ✅ Fix OverwriteModelError
+module.exports =
+  mongoose.models.Employee || mongoose.model("Employee", employeeSchema);

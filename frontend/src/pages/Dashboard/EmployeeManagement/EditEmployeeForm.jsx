@@ -30,7 +30,7 @@ const CreateEmployee = () => {
   const [editingIndex, setEditingIndex] = useState(null);
 
   const [form, setForm] = useState({
-    salutation: "Mr",
+    salutation: "Mr.",
     name: "",
     email: "",
     dateOfBirth: "",
@@ -146,9 +146,9 @@ const CreateEmployee = () => {
                       <label htmlFor="salutation" className="text-sm font-medium text-gray-700 mb-1">Salutation<span className="text-red-500">*</span></label>
                       <select id="salutation" name="salutation" value={form.salutation} onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Ms">Ms</option>
+                        <option value="Mr.">Mr</option>
+                        <option value="Mrs.">Mrs</option>
+                        <option value="Ms.">Ms</option>
                       </select>
                     </div>
                     <div className="flex flex-col">

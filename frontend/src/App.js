@@ -28,7 +28,7 @@ import ViewApprovedLoans from './pages/Dashboard/LoanManagement/ViewApprovedLoan
 import ViewRejectedLoans from './pages/Dashboard/LoanManagement/ViewRejectedLoans';
 
 
-import DeathFundDashboard from './pages/Dashboard/DeathFundsManagement';
+
 import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagement';
 import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
 import RefundsDashboard from './pages/Dashboard/RefundsManagement';
@@ -81,8 +81,6 @@ function App() {
             <Route path="/viewLoans/rejected" element={<ViewRejectedLoans />} />
 
 
-            
-            <Route path="/deathFundDashboard" element={<DeathFundDashboard/>}/>
             <Route path="/retirementGiftsDashboard" element={<RetirementGiftsDashboard/>}/>
             <Route path="/scholarships" element={<Scholarships/>}/>
             <Route path="/refundsDashboard" element={<RefundsDashboard/>}/>
