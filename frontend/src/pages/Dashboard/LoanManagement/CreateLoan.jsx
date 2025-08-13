@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import bgImage from "../../../images/background.png";
@@ -14,18 +14,45 @@ const CreateLoan = () => {
     role: "",
     reason: "",
     loanDate: "",
-    status: 'pending'
+    status: "pending"
   });
+
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "epfNumber") {
+      if (value.trim().length > 0) {
+        fetch(`http://localhost:8070/api/v1/employee/search?epf=${value}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setSuggestions(data);
+            setShowSuggestions(true);
+          })
+          .catch((err) => console.error("Error fetching suggestions", err));
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }
+  };
+
+  const handleSelectSuggestion = (emp) => {
+    setFormData((prev) => ({
+      ...prev,
+      epfNumber: emp.epfNumber,
+      name: emp.name
+    }));
+    setShowSuggestions(false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const confirm = await Swal.fire({
       title: "Confirm Loan Submission",
       text: "Do you want to submit this loan application?",
@@ -45,7 +72,6 @@ const CreateLoan = () => {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.message || "Failed to create loan");
 
       Swal.fire("Success", "Loan created successfully!", "success");
@@ -58,7 +84,6 @@ const CreateLoan = () => {
   return (
     <div className="flex h-screen">
       <SideBar />
-
       <main
         className="flex-1 bg-cover bg-center bg-no-repeat overflow-y-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
@@ -74,18 +99,36 @@ const CreateLoan = () => {
             className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-3xl mx-auto"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block mb-1 font-semibold text-gray-700">EPF Number</label>
+              {/* EPF Number Autocomplete */}
+              <div className="relative">
+                <label className="block mb-1 font-semibold text-gray-700">
+                  EPF Number
+                </label>
                 <input
                   type="text"
                   name="epfNumber"
                   value={formData.epfNumber}
                   onChange={handleChange}
                   required
+                  autoComplete="off"
                   className="w-full px-4 py-2 rounded border focus:outline-orange-500"
                 />
+                {showSuggestions && suggestions.length > 0 && (
+                  <ul className="absolute bg-white border rounded mt-1 w-full max-h-40 overflow-y-auto z-20 shadow">
+                    {suggestions.map((emp) => (
+                      <li
+                        key={emp._id}
+                        onClick={() => handleSelectSuggestion(emp)}
+                        className="px-4 py-2 cursor-pointer hover:bg-orange-100"
+                      >
+                        {emp.epfNumber} - {emp.name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
+              {/* Name */}
               <div>
                 <label className="block mb-1 font-semibold text-gray-700">Name</label>
                 <input
@@ -98,6 +141,7 @@ const CreateLoan = () => {
                 />
               </div>
 
+              {/* Rest of your fields */}
               <div>
                 <label className="block mb-1 font-semibold text-gray-700">NIC</label>
                 <input
@@ -169,7 +213,12 @@ const CreateLoan = () => {
             </div>
           </form>
         </div>
-         <Link to="/loansManagement" className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline">Back</Link>
+        <Link
+          to="/loansManagement"
+          className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline"
+        >
+          Back
+        </Link>
       </main>
     </div>
   );

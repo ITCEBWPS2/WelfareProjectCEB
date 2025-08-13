@@ -156,3 +156,22 @@ exports.retireEmployee = async (req, res) => {
     res.status(500).json({ message: "Error retiring employee", error: err.message });
   }
 };
+
+//earch Controller
+exports.searchEmployees = async (req, res) => {
+  try {
+    const { epf } = req.query;
+    let query = {};
+
+    if (epf) {
+      query.epfNumber = { $regex: `^${epf}`, $options: "i" }; // starts with typed value
+    }
+
+    const employees = await Employee.find(query).select("epfNumber name");
+    res.json(employees);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
