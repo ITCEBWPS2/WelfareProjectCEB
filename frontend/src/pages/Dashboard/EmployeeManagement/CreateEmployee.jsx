@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import bgImage from '../../../images/background.png';
-import SideBar from "../SideBar";
+
 
 const CreateEmployee = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [welfareNumber, setWelfareNumber] = useState("");
 
   const [form, setForm] = useState({
     salutation: "Mr",
@@ -106,13 +106,26 @@ const CreateEmployee = () => {
   const nextStep = () => setStep(prev => prev + 1);
   const prevStep = () => setStep(prev => prev - 1);
 
+  useEffect(() => {
+    const fetchNextWelfareNumber = async () => {
+      try {
+        const res = await fetch("http://localhost:8070/api/v1/employee/nextWelfareNumber");
+        const data = await res.json();
+        setWelfareNumber(data.nextWelfareNumber); // correct property
+        setForm(prev => ({ ...prev, welfareNumber: data.nextWelfareNumber })); // store in form too
+      } catch (err) {
+        console.error("Error fetching welfare number", err);
+      }
+    };
+
+    fetchNextWelfareNumber();
+  }, []);
+
+
   return (
-    <div className="flex h-screen">
-      <SideBar />
-      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: `url(${bgImage})` }}>
-        <div className="absolute inset-0 bg-black/30 z-0" />
+    <div className="flex">
+      <main className="flex-1 relative bg-cover bg-center bg-no-repeat">
         <div className="relative z-10 px-6 pt-6 pb-20">
-          <h2 className="text-3xl font-bold text-white mb-6">New Employee</h2>
           <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-md max-w-4xl mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6">
 
@@ -189,7 +202,7 @@ const CreateEmployee = () => {
 
                     <div className="flex flex-col">
                       <label htmlFor="welfareNumber" className="text-sm font-medium text-gray-700 mb-1">Welfare Number<span className="text-red-500">*</span></label>
-                      <input type="text" id="welfareNumber" name="welfareNumber" value={form.welfareNumber} onChange={handleChange}
+                      <input type="text" id="welfareNumber" name="welfareNumber" value={welfareNumber} readOnly onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400" />
                     </div>
 
@@ -337,7 +350,6 @@ const CreateEmployee = () => {
             </form>
           </div>
         </div>
-        <Link to="/manageEmployees" className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline">Back</Link>
       </main>
     </div>
   );

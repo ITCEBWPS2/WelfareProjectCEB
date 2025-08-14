@@ -128,9 +128,9 @@ const CreateEmployee = () => {
   const prevStep = () => setStep(prev => prev - 1);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       <SideBar />
-      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: `url(${bgImage})` }}>
+      <main className="flex-1 relative bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgImage})` }}>
         <div className="absolute inset-0 bg-black/30 z-0" />
         <div className="relative z-10 px-6 pt-6 pb-20">
           <h2 className="text-3xl font-bold text-white mb-6">New Employee</h2>

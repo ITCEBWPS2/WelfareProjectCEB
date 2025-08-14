@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import bgImage from '../../../images/background.png';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SideBar from "../SideBar";
 import Swal from 'sweetalert2';
 
@@ -51,7 +50,7 @@ const DeleteAdmin = () => {
       confirmButtonText: 'Go to Manage Admins',
     });
 
-    navigate('/deleteAdmin');
+    navigate('/manageAdmins');
   } catch (err) {
     setError(err.message);
   }
@@ -59,13 +58,11 @@ const DeleteAdmin = () => {
 
 
   return (
-    <div className="flex h-screen">
-      <SideBar />
-
-      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto" style={{ backgroundImage: `url(${bgImage})` }}>
-        <div className="absolute inset-0 bg-black/30 z-0" />
+    <div className="flex">
+      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto">
+        
         <div className="relative z-10 p-6">
-          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">Delete Admins</h2>
+          
 
           <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-5xl mx-auto">
             {error && (
@@ -113,10 +110,6 @@ const DeleteAdmin = () => {
             </div>
           </div>
         </div>
-
-        <Link to="/manageAdmins" className="absolute bottom-4 right-6 text-white text-sm hover:underline">
-          Back
-        </Link>
       </main>
     </div>
   );

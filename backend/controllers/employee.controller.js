@@ -157,7 +157,7 @@ exports.retireEmployee = async (req, res) => {
   }
 };
 
-//earch Controller
+//search Controller
 exports.searchEmployees = async (req, res) => {
   try {
     const { epf } = req.query;
@@ -175,3 +175,23 @@ exports.searchEmployees = async (req, res) => {
 };
 
 
+exports.getNextWelfareNumber = async (req, res) => {
+  try {
+    const lastEmployee = await Employee.findOne({})
+      .sort({ welfareNumber: -1 }) // sort descending
+      .exec();
+
+    let nextNumber = "W00001"; // default if no employee exists
+
+    if (lastEmployee && lastEmployee.welfareNumber) {
+      const lastNum = parseInt(lastEmployee.welfareNumber.slice(1), 10);
+      const newNum = lastNum + 1;
+      nextNumber = "W" + newNum.toString().padStart(5, "0");
+    }
+
+    res.status(200).json({ nextWelfareNumber: nextNumber });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+};

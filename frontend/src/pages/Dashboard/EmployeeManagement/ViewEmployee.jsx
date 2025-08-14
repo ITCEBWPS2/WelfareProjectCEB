@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import bgImage from '../../../images/background.png';
-import SideBar from '../SideBar';
 import Swal from 'sweetalert2';
 
 const ViewEmployee = () => {
@@ -25,7 +23,6 @@ const ViewEmployee = () => {
   }, []);
 
   const handleRowClick = (id) => {
-    // Navigate to employee detail page using hidden _id
     navigate(`/viewEmployee/${id}`);
   };
 
@@ -57,16 +54,13 @@ const ViewEmployee = () => {
     try {
       const res = await fetch(`http://localhost:8070/api/v1/retire/retireEmployee/${id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ retiredDate })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ retiredDate }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to retire employee");
 
-      // Remove retired employee from state to update UI
       setEmployees(prev => prev.filter(emp => emp._id !== id));
 
       Swal.fire({
@@ -84,17 +78,9 @@ const ViewEmployee = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      <SideBar />
-      <main
-        className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/30 z-0" />
+    <div className="flex">
+      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow">
         <div className="relative z-10 p-6">
-          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">View Employees</h2>
-
           <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-5xl mx-auto">
             {error && (
               <div className="bg-orange-100 text-red-700 px-4 py-2 rounded mb-4 text-center">{error}</div>
@@ -111,46 +97,49 @@ const ViewEmployee = () => {
                     <th className="py-3 px-4 border-b">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {employees.length > 0 ? (
-                    employees.map((emp, index) => (
-                      <tr
-                        key={emp._id}
-                        className="hover:bg-orange-50 cursor-pointer"
-                        onClick={() => handleRowClick(emp._id)}
-                      >
-                        <td className="py-2 px-4 border-b">{index + 1}</td>
-                        <td className="py-2 px-4 border-b">{emp.epfNumber || '-'}</td>
-                        <td className="py-2 px-4 border-b">{emp.name || '-'}</td>
-                        <td className="py-2 px-4 border-b">{emp.welfareNumber || '-'}</td>
-                        <td className="py-2 px-4 border-b">
-                          <button
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent row click
-                              handleRetire(emp._id);
-                            }}
-                          >
-                            Retire
-                          </button>
+              </table>
+
+              {/* Scrollable tbody */}
+              <div className="overflow-y-auto max-h-[calc(9*48px)]">
+                <table className="w-full text-left border-collapse">
+                  <tbody>
+                    {employees.length > 0 ? (
+                      employees.map((emp, index) => (
+                        <tr
+                          key={emp._id}
+                          className="hover:bg-orange-50 cursor-pointer"
+                          onClick={() => handleRowClick(emp._id)}
+                        >
+                          <td className="py-2 px-4 border-b">{index + 1}</td>
+                          <td className="py-2 px-4 border-b">{emp.epfNumber || '-'}</td>
+                          <td className="py-2 px-4 border-b">{emp.name || '-'}</td>
+                          <td className="py-2 px-4 border-b">{emp.welfareNumber || '-'}</td>
+                          <td className="py-2 px-4 border-b">
+                            <button
+                              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRetire(emp._id);
+                              }}
+                            >
+                              Retire
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="text-center py-4 text-gray-500">
+                          No employee data available.
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="5" className="text-center py-4 text-gray-500">
-                        No employee data available.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-        <Link to="/manageEmployees" className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline">
-          Back
-        </Link>
       </main>
     </div>
   );

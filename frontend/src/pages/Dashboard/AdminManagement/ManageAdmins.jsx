@@ -1,30 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import bgImage from '../../../images/background.png';
-import { useNavigate } from 'react-router-dom';
 import { UserPlus, Users, KeyRound, UserX } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import SideBar from "../SideBar";
-
+import CreateAdmin from './CreateAdmin';
+import ViewAdmin from './ViewAdmin';
+import UpdateAdmin from './UpdateAdmin';
+import DeleteAdmin from './DeleteAdmin';
 
 const ManageAdmins = () => {
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("new");
 
-  const adminActions = [
-  { title: 'New Admins', icon: <UserPlus size={24} className="text-orange-600" />, path: '/createAdmin'},
-  { title: 'View Admins', icon: <Users size={24} className="text-orange-600" />, path: '/viewAdmin' },
-  { title: 'Update Admins', icon: <KeyRound size={24} className="text-orange-600" />, path: '/updateAdmin'},
-  { title: 'Delete Admins', icon: <UserX size={24} className="text-orange-600" />,path: '/deleteAdmin' },
-];
+  const tabs = [
+    { id: "new", label: "New Admin", icon: <UserPlus size={20} /> },
+    { id: "view", label: "View Admins", icon: <Users size={20} /> },
+    { id: "update", label: "Update Admins", icon: <KeyRound size={20} /> },
+    { id: "delete", label: "Delete Admins", icon: <UserX size={20} /> },
+  ];
 
-  const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      navigate('/');
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "new": return <CreateAdmin />;
+      case "view": return <ViewAdmin />;
+      case "update": return <UpdateAdmin />;
+      case "delete": return <DeleteAdmin />;
+      default: return null;
     }
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       {/* Sidebar */}
       <SideBar />
 
@@ -33,29 +37,33 @@ const ManageAdmins = () => {
         className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/30 z-0" />
         <div className="relative z-10 p-6">
-          {/* Title */}
-          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">Manage Admins</h2>
+          <h2 className="text-3xl font-bold text-white drop-shadow mb-4">Manage Admins</h2>
 
-          {/* Admin Action Buttons */}
-          <div className="p-6 min-h-[calc(100vh-150px)] flex items-center justify-center">
-            <div className="grid grid-cols-2 gap-8 w-full max-w-3xl">
-              {adminActions.map((action, index) => (
-                <button
-                  key={index}
-                  onClick={() => navigate(action.path)}
-                  className="bg-white/90 shadow-md rounded-2xl p-8 text-xl font-semibold hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer hover:bg-orange-100 flex items-center justify-center space-x-3 border-t-4 border-orange-500"
-                >
-                  {action.icon}
-                  <span>{action.title}</span>
-                </button>
-              ))}
-            </div>
+          {/* Tabs */}
+          <div className="flex space-x-4 mb-6">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition ${
+                  activeTab === tab.id
+                    ? "bg-orange-500 text-white"
+                    : "bg-white/80 hover:bg-orange-100 text-gray-800"
+                }`}
+              >
+                {tab.icon}
+                <span className="ml-2">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Content */}
+          <div>
+            {renderTabContent()}
           </div>
         </div>
-        <Link to="/dashboard" className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline">Back</Link>
       </main>
     </div>
   );

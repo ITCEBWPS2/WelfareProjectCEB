@@ -24,16 +24,16 @@ const ViewAdmin = () => {
   }, []);
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <SideBar />
+    <div className="flex">
+      {/* Sidebar
+      <SideBar /> */}
 
       {/* Main Content */}
-      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto" style={{ backgroundImage: `url(${bgImage})` }}>
-        <div className="absolute inset-0 bg-black/30 z-0" />
+      <main className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto">
+        
 
         <div className="relative z-10 p-6">
-          <h2 className="text-3xl font-bold text-white drop-shadow mb-6">View Admins</h2>
+          {/* <h2 className="text-3xl font-bold text-white drop-shadow mb-6">View Admins</h2> */}
 
           <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-5xl mx-auto">
             {error && (
@@ -74,10 +74,6 @@ const ViewAdmin = () => {
             </div>
           </div>
         </div>
-
-        <Link to="/manageAdmins" className="absolute bottom-4 right-6 text-white text-sm hover:underline">
-          Back
-        </Link>
       </main>
     </div>
   );
