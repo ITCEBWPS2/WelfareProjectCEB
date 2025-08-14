@@ -62,7 +62,7 @@ const Login = () => {
         Welcome to CEB Welfare Portal !
       </div>
 
-      <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-lg w-half max-w-md">
+      <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg w-half max-w-md">
         <h2 className="text-3xl font-bold text-center text-orange-600 mb-6">Login</h2>
         {error && (
           <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">

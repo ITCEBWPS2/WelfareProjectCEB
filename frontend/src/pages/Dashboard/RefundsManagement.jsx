@@ -104,9 +104,9 @@ const RefundsTable = ({ tableTitle, onRefundAdded }) => {
 
     return (
         <div className="font-sans antialiased">
-            <div className="overflow-x-auto bg-white/70 rounded-lg shadow-lg p-4 backdrop-blur-sm">
+            <div className="overflow-x-auto bg-white/90 rounded-lg shadow-lg p-4 backdrop-blur-sm">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">{tableTitle}</h2>
-                <table className="min-w-full bg-white/80 rounded-lg overflow-hidden">
+                <table className="min-w-full bg-white/90 rounded-lg overflow-hidden">
                     <thead className="bg-orange-600 text-white text-xs md:text-sm">
                         <tr>
                             {[

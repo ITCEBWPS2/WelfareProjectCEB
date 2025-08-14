@@ -92,7 +92,7 @@ const CreateAdminForm = () => {
 
   return (
     <div className=" flex items-center justify-center">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md relative">
+      <div className="w-full max-w-md p-6 bg-white/90 rounded-lg shadow-md relative">
         <h2 className="text-2xl font-bold text-center text-orange-600 mb-4">
           Create New Admin
         </h2>

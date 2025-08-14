@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import bgImage from "../../../images/background.png";
-import SideBar from "../../Dashboard/SideBar";
-import { Link } from 'react-router-dom';
 
 const CreateLoan = () => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     epfNumber: "",
     name: "",
     NIC: "",
@@ -15,8 +12,9 @@ const CreateLoan = () => {
     reason: "",
     loanDate: "",
     status: "pending"
-  });
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -75,6 +73,12 @@ const CreateLoan = () => {
       if (!res.ok) throw new Error(data.message || "Failed to create loan");
 
       Swal.fire("Success", "Loan created successfully!", "success");
+      
+      // Reset form and suggestions
+      setFormData(initialFormData);
+      setSuggestions([]);
+      setShowSuggestions(false);
+
       navigate("/loansManagement");
     } catch (error) {
       Swal.fire("Error", error.message, "error");
@@ -82,18 +86,9 @@ const CreateLoan = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      <SideBar />
-      <main
-        className="flex-1 bg-cover bg-center bg-no-repeat overflow-y-auto"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
-        <div className="absolute inset-0 bg-black/30 z-0" />
+    <div className="flex">
+      <main className="flex-1 bg-cover bg-center bg-no-repeat overflow-y-auto">
         <div className="relative z-10 p-6">
-          <h2 className="text-3xl font-bold text-white mb-6 drop-shadow">
-            Create New Loan
-          </h2>
-
           <form
             onSubmit={handleSubmit}
             className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-3xl mx-auto"
@@ -141,7 +136,7 @@ const CreateLoan = () => {
                 />
               </div>
 
-              {/* Rest of your fields */}
+              {/* NIC */}
               <div>
                 <label className="block mb-1 font-semibold text-gray-700">NIC</label>
                 <input
@@ -154,6 +149,7 @@ const CreateLoan = () => {
                 />
               </div>
 
+              {/* Loan Amount */}
               <div>
                 <label className="block mb-1 font-semibold text-gray-700">Loan Amount (Rs)</label>
                 <input
@@ -166,6 +162,7 @@ const CreateLoan = () => {
                 />
               </div>
 
+              {/* Role */}
               <div>
                 <label className="block mb-1 font-semibold text-gray-700">Role</label>
                 <input
@@ -178,6 +175,7 @@ const CreateLoan = () => {
                 />
               </div>
 
+              {/* Loan Date */}
               <div>
                 <label className="block mb-1 font-semibold text-gray-700">Loan Request Date</label>
                 <input
@@ -190,6 +188,7 @@ const CreateLoan = () => {
                 />
               </div>
 
+              {/* Reason */}
               <div className="md:col-span-2">
                 <label className="block mb-1 font-semibold text-gray-700">Reason for Loan</label>
                 <textarea
@@ -213,12 +212,6 @@ const CreateLoan = () => {
             </div>
           </form>
         </div>
-        <Link
-          to="/loansManagement"
-          className="absolute bottom-4 right-6 text-white text-sm cursor-pointer hover:underline"
-        >
-          Back
-        </Link>
       </main>
     </div>
   );

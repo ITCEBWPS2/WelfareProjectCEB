@@ -50,7 +50,7 @@ const ManageAdmins = () => {
                 className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition ${
                   activeTab === tab.id
                     ? "bg-orange-500 text-white"
-                    : "bg-white/80 hover:bg-orange-100 text-gray-800"
+                    : "bg-white/90 hover:bg-orange-100 text-gray-800"
                 }`}
               >
                 {tab.icon}
