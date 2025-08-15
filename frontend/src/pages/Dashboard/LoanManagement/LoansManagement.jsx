@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import bgImage from '../../../images/background.png';
 import { Plus, FileText, ThumbsUp, Clock, Ban } from 'lucide-react';
 import SideBar from "../SideBar";
+import BackButton from "../../Dashboard/BackButton";
 
 // Import your loan components
 import CreateLoan from './CreateLoan';
@@ -46,9 +47,11 @@ const LoanDashboard = () => {
         <div className="absolute inset-0 bg-black/30 z-0" />
         <div className="relative z-10 p-6">
           <h2 className="text-3xl font-bold text-white drop-shadow mb-4">Loan Management</h2>
+          
 
           {/* Tabs */}
           <div className="flex space-x-4 mb-6">
+            <BackButton to="/dashboard" />
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -63,6 +66,7 @@ const LoanDashboard = () => {
                 <span className="ml-2">{tab.label}</span>
               </button>
             ))}
+            
           </div>
 
           {/* Tab Content */}

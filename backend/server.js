@@ -52,3 +52,6 @@ app.use("/api/v1/loans", loanRoutes);
 
 const logRoutes = require("./routes/logRoutes");
 app.use("/api/v1/logs", logRoutes);
+
+const deathFundRoutes = require("./routes/deathFundRoutes");
+app.use("/api/v1/deathFunds", deathFundRoutes);

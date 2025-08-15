@@ -24,7 +24,7 @@
         title: 'Death Funds',
         description: 'Administer and process death fund requests for eligible beneficiaries.',
         icon: <HeartPulse className="w-10 h-10 text-purple-500" />,
-        path: '/deathFundDashboard'
+        path: '/deathFundManagement'
       },
       {
         title: 'Retirement Gifts',

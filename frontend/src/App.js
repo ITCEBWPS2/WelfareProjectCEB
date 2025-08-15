@@ -28,6 +28,9 @@ import ViewApprovedLoans from './pages/Dashboard/LoanManagement/ViewApprovedLoan
 import ViewRejectedLoans from './pages/Dashboard/LoanManagement/ViewRejectedLoans';
 
 
+import DeathFundManagement from './pages/Dashboard/DeathFundManagement/ManageDeathFund';
+
+
 
 import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagement';
 import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
@@ -37,7 +40,6 @@ import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
 import EditAdminForm from './pages/Dashboard/AdminManagement/EditAdminForm';
 
 import LoanApplication from './pages/Applications/LoanApplication';
-import DeathFundForm from './pages/Applications/DeathFundApplication';
 import RetirementForm from './pages/Applications/RetirementGiftApplication';
 import ScholarshipForm from './pages/Applications/ScholarshipApplication';
 import RefundForm from './pages/Applications/RefundsApplication';
@@ -80,13 +82,14 @@ function App() {
             <Route path="/viewLoans/approved" element={<ViewApprovedLoans />} />
             <Route path="/viewLoans/rejected" element={<ViewRejectedLoans />} />
 
+            {/* Deathfund Management */}
+            <Route path="/deathFundManagement" element={<DeathFundManagement/>}/>
 
             <Route path="/retirementGiftsDashboard" element={<RetirementGiftsDashboard/>}/>
             <Route path="/scholarships" element={<Scholarships/>}/>
             <Route path="/refundsDashboard" element={<RefundsDashboard/>}/>
             <Route path="/medicalsDashboard" element={<MedicalsDashboard/>}/>
             <Route path="/loanApplication" element={<LoanApplication/>}/>
-            <Route path="/deathFundForm" element={<DeathFundForm/>}/>
             <Route path="/retirementForm" element={<RetirementForm/>}/>
             <Route path="/scholarshipForm" element={<ScholarshipForm/>}/>
             <Route path="/refundForm" element={<RefundForm/>}/>
