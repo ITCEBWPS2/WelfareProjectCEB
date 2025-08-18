@@ -123,7 +123,7 @@ const CreateEmployee = () => {
 
 
   return (
-    <div className="flex">
+    
       <main className="flex-1 relative bg-cover bg-center bg-no-repeat">
         <div className="relative z-10 px-6 pt-6 pb-20">
           <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-md max-w-4xl mx-auto">
@@ -351,7 +351,7 @@ const CreateEmployee = () => {
           </div>
         </div>
       </main>
-    </div>
+    
   );
 };
 

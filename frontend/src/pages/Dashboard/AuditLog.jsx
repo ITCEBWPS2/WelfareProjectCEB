@@ -35,7 +35,7 @@ const AuditLogs = () => {
         className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
-        <div className="absolute inset-0 bg-black/30 z-0" />
+        {/* <div className="absolute inset-0 bg-black/30 z-0" /> */}
         <div className="relative z-10 p-6">
           <h1 className="text-3xl font-bold text-white drop-shadow mb-6">Audit Logs</h1>
 

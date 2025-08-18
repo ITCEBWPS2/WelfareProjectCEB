@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 
 const ManageEmployees = () => {
   const location = useLocation();
+
   // Map the state.section to the corresponding tab id
   const sectionToTabId = {
     newEmployee: "new",
@@ -50,17 +51,19 @@ const ManageEmployees = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <SideBar />
 
       {/* Main Content */}
       <main
-        className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
+        className="flex-1 relative bg-cover bg-center bg-no-repeat h-screen overflow-hidden"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black/30 z-0" />
-        <div className="relative z-10 p-6">
+
+        <div className="relative z-10 p-6 h-full flex flex-col">
           <h2 className="text-3xl font-bold text-white drop-shadow mb-4">
             Manage Employees
           </h2>
@@ -84,7 +87,9 @@ const ManageEmployees = () => {
           </div>
 
           {/* Tab Content */}
-          <div>{renderTabContent()}</div>
+          <div className="flex-1 overflow-hidden rounded-xl  p-4 shadow-md">
+            {renderTabContent()}
+          </div>
         </div>
       </main>
     </div>

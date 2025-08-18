@@ -9,6 +9,9 @@
   import bgImage from '../../images/background.png';
   import { useNavigate } from 'react-router-dom';
   import SideBar from '../Dashboard/SideBar';
+  import { LogOut } from "lucide-react";  
+  import Swal from "sweetalert2";
+
 
   const Home = () => {
     const navigate = useNavigate();
@@ -52,12 +55,32 @@
       },
     ];
 
-    const handleLogout = () => {
-      const confirmLogout = window.confirm("Are you sure you want to log out?");
-      if (confirmLogout) {
-        navigate('/');
-      }
-    };
+    const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, log me out!",
+    });
+
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Logged Out",
+        text: "You have been successfully logged out.",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  };
+
 
   return (
     <div className="flex h-screen">
@@ -75,6 +98,11 @@
           {/* Title */}
           <h2 className="text-3xl font-bold text-white drop-shadow mt-12">Welcome to Welfare Portal !!</h2>
 
+        <div className="pt-8 pb-2">
+          <button onClick={handleLogout} className="absolute top-6 right-6 flex items-center gap-2 px-5 py-2 rounded-xl 
+             bg-green-500 text-white font-semibold shadow-md hover:bg-green-600 
+             hover:shadow-lg active:scale-95 transition-all duration-300"><LogOut size={18} /> Logout</button>
+        </div>
 
             {/* Cards */}
             <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
