@@ -5,12 +5,14 @@ import Login from "./pages/Auth/Login";
 import Home from "./pages/Dashboard/Home";
 import AuditLog from "./pages/Dashboard/AuditLog";
 
+//Admin Management
 import CreateAdmin from "./pages/Dashboard/AdminManagement/CreateAdmin";
 import ViewAdmin from "./pages/Dashboard/AdminManagement/ViewAdmin";
 import DeleteAdmin from "./pages/Dashboard/AdminManagement/DeleteAdmin";
 import UpdateAdmin from "./pages/Dashboard/AdminManagement/UpdateAdmin";
 import ManageAdmins from './pages/Dashboard/AdminManagement/ManageAdmins';
 
+//Employee Management
 import CreateEmployee from './pages/Dashboard/EmployeeManagement/CreateEmployee';
 import ViewEmployees from './pages/Dashboard/EmployeeManagement/ViewEmployee';
 import ViewEmployeeById from './pages/Dashboard/EmployeeManagement/ViewEmployeeById';
@@ -19,6 +21,7 @@ import EditEmployeeForm from './pages/Dashboard/EmployeeManagement/EditEmployeeF
 import ViewRetiredEmployees from './pages/Dashboard/EmployeeManagement/ViewRetiredEmployees';
 import ManageEmployees from './pages/Dashboard/EmployeeManagement/ManageEmployees';
 
+//Loans Management
 import LoansManagement from './pages/Dashboard/LoanManagement/LoansManagement';
 import CreateLoan from './pages/Dashboard/LoanManagement/CreateLoan';
 // import ViewLoans from './pages/Dashboard/LoanManagement/ViewLoan';
@@ -27,12 +30,22 @@ import ViewPendingLoans from './pages/Dashboard/LoanManagement/ViewPendingLoans'
 import ViewApprovedLoans from './pages/Dashboard/LoanManagement/ViewApprovedLoans';
 import ViewRejectedLoans from './pages/Dashboard/LoanManagement/ViewRejectedLoans';
 
-
+//DeathFundManagement
 import DeathFundManagement from './pages/Dashboard/DeathFundManagement/ManageDeathFund';
+import ViewAllDeathFunds from './pages/Dashboard/DeathFundManagement/ViewAllDeathFunds';
+import CreateDeathFund from './pages/Dashboard/DeathFundManagement/CreateDeathFund';
+import PendingDeathFunds from './pages/Dashboard/DeathFundManagement/PendingDeathFunds';
+import RejectedDeathFunds from './pages/Dashboard/DeathFundManagement/RejectedDeathFunds';
+import ApprovedDeathFunds from './pages/Dashboard/DeathFundManagement/ApprovedDeathFunds';
+
+
+//Retirement Gift Management
+import RetirementGiftManagement from './pages/Dashboard/RetirementGiftManagement/RetirementGiftManagement';
+import CreateRetirementGift from './pages/Dashboard/RetirementGiftManagement/CreateRetirementGift';
+import ViewRetirementGifts from './pages/Dashboard/RetirementGiftManagement/ViewAllRetirementGifts';
 
 
 
-import RetirementGiftsDashboard from './pages/Dashboard/RetirementGiftsManagement';
 import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
 import RefundsDashboard from './pages/Dashboard/RefundsManagement';
 import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
@@ -44,6 +57,10 @@ import RetirementForm from './pages/Applications/RetirementGiftApplication';
 import ScholarshipForm from './pages/Applications/ScholarshipApplication';
 import RefundForm from './pages/Applications/RefundsApplication';
 import MedicalForm from './pages/Applications/MedicalApplication';
+
+
+
+
 
 function App() {
   return (
@@ -84,8 +101,18 @@ function App() {
 
             {/* Deathfund Management */}
             <Route path="/deathFundManagement" element={<DeathFundManagement/>}/>
+            <Route path="/createDeathFund" element={<CreateDeathFund/>}/>
+            <Route path="/viewDeathFunds" element={<ViewAllDeathFunds/>}/>
+            <Route path="/viewDeathFunds/pending" element={<PendingDeathFunds/>}/>
+            <Route path="/viewDeathFunds/approved" element={<ApprovedDeathFunds/>}/>
+            <Route path="/viewDeathFunds/rejected" element={<RejectedDeathFunds/>}/>
 
-            <Route path="/retirementGiftsDashboard" element={<RetirementGiftsDashboard/>}/>
+
+            {/* Retirement Gift Management */}
+            <Route path="/retirementGiftManagement" element={<RetirementGiftManagement/>}/>
+            <Route path="/createRetirementGift" element={<CreateRetirementGift/>}/>
+            <Route path="/viewRetirementGifts" element={<ViewRetirementGifts/>}/>
+
             <Route path="/scholarships" element={<Scholarships/>}/>
             <Route path="/refundsDashboard" element={<RefundsDashboard/>}/>
             <Route path="/medicalsDashboard" element={<MedicalsDashboard/>}/>

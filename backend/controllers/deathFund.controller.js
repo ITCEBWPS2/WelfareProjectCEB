@@ -47,32 +47,25 @@ exports.viewDeathFundById = async (req, res) => {
 };
 
 // Update a Death Fund by ID
-exports.updateDeathFund = async (req, res) => {
+// Update only the status of a Death Fund by ID
+exports.updateDeathFundStatus = async (req, res) => {
   try {
     const updatedDeathFund = await DeathFund.findByIdAndUpdate(
       req.params.id,
-      {
-        epfNumber: req.body.epfNumber,
-        contactNumber: req.body.contactNumber,
-        dateOfDeath: req.body.dateOfDeath,
-        beneficiaryType: req.body.beneficiaryType,
-        beneficiaryName: req.body.beneficiaryName,
-        fundAmount: req.body.fundAmount,
-        fundDate: req.body.fundDate,
-        fundType: req.body.fundType,
-        paymentMethod: req.body.paymentMethod,
-        status: req.body.status,
-      },
+      { status: req.body.status },
       { new: true }
     );
 
-    if (!updatedDeathFund) return res.status(404).json({ message: "Death fund not found" });
+    if (!updatedDeathFund) {
+      return res.status(404).json({ message: "Death fund not found" });
+    }
 
     res.status(200).json(updatedDeathFund);
   } catch (err) {
-    res.status(500).json({ message: "Failed to update death fund", error: err.message });
+    res.status(500).json({ message: "Failed to update status", error: err.message });
   }
 };
+
 
 // Delete a Death Fund by ID
 exports.deleteDeathFund = async (req, res) => {

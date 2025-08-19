@@ -1,8 +1,7 @@
 const Logger = require("../utils/Logger");
 const Log = require("../models/log");
 
-
-const getLogs = async (req, res) => {
+exports.getLogs = async (req, res) => {
   try {
     const { type, event, user, from, to, page = 1, limit = 20 } = req.query;
 
@@ -20,7 +19,7 @@ const getLogs = async (req, res) => {
       if (to) filters.timestamp.$lte = new Date(to);
     }
 
-    console.log("Filters:", filters); // ✅ Add this for debugging
+    console.log("Filters:", filters); // Debugging
 
     const result = await Logger.searchLogs(filters, pageNum, limitNum);
 
@@ -33,7 +32,7 @@ const getLogs = async (req, res) => {
       data: result.data,
     });
   } catch (error) {
-    console.error("❌ Error retrieving logs:", error); // Log full error
+    console.error("❌ Error retrieving logs:", error);
     res.status(500).json({
       success: false,
       message: "Failed to retrieve logs",
@@ -42,45 +41,39 @@ const getLogs = async (req, res) => {
   }
 };
 
+exports.getLogStats = async (req, res) => {
+  try {
+    const stats = await Log.aggregate([
+      {
+        $group: {
+          _id: "$type",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { count: -1 },
+      },
+    ]);
 
-const getLogStats = async (req, res) => {
-    try {
-        const stats = await Log.aggregate([
-            {
-                $group: {
-                    _id: "$type",
-                    count: { $sum: 1 },
-                },
-            },
-            {
-                $sort: { count: -1 },
-            },
-        ]);
+    const totalLogs = await Log.countDocuments();
+    const recentLogs = await Log.countDocuments({
+      timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    });
 
-        const totalLogs = await Log.countDocuments();
-        const recentLogs = await Log.countDocuments({
-            timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
-        });
-
-        res.status(200).json({
-            success: true,
-            data: {
-                totalLogs,
-                recentLogs,
-                typeBreakdown: stats,
-            },
-        });
-    } catch (error) {
-        console.error("Error getting log stats:", error);
-        res.status(500).json({
-            success: false,
-            message: "Failed to get log statistics",
-            error: error.message,
-        });
-    }
-};
-
-module.exports = {
-  getLogs,
-  getLogStats
+    res.status(200).json({
+      success: true,
+      data: {
+        totalLogs,
+        recentLogs,
+        typeBreakdown: stats,
+      },
+    });
+  } catch (error) {
+    console.error("Error getting log stats:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to get log statistics",
+      error: error.message,
+    });
+  }
 };

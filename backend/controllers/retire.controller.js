@@ -1,5 +1,5 @@
 const RetiredEmployee = require('../models/RetiredEmployee');
-const Employee = require('../models/Employee');
+const Employee = require('../models/employee');
 const Logger = require('../utils/Logger');
 
 // ✅ Retire employee with custom retired date

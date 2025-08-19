@@ -2,16 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const CreateLoan = () => {
+const CreateRetirementGift = () => {
   const initialFormData = {
     epfNumber: "",
     name: "",
-    NIC: "",
-    loanAmount: "",
-    role: "",
-    reason: "",
-    loanDate: "",
-    status: "pending"
+    dateJoined: "",
+    dateOfRetire: "",
+    giftType: "",
+    giftDescription: "",
+    giftValue: "",
+    disbursementMethod: "",
+    disbursementDate: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -20,6 +21,7 @@ const CreateLoan = () => {
 
   const navigate = useNavigate();
 
+  // Handle input changes and EPF suggestions
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -44,16 +46,19 @@ const CreateLoan = () => {
     setFormData((prev) => ({
       ...prev,
       epfNumber: emp.epfNumber,
-      name: emp.name
+      name: emp.name,
+      dateJoined: emp.dateJoined ? emp.dateJoined.substring(0, 10) : "",
     }));
     setShowSuggestions(false);
   };
 
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const confirm = await Swal.fire({
-      title: "Confirm Loan Submission",
-      text: "Do you want to submit this loan application?",
+      title: "Confirm Retirement Gift Submission",
+      text: "Do you want to submit this retirement gift record?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#d97706",
@@ -63,23 +68,39 @@ const CreateLoan = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      const res = await fetch("http://localhost:8070/api/v1/loans/createLoan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const payload = {
+        epfNumber: formData.epfNumber,
+        name: formData.name,
+        dateJoined: formData.dateJoined,
+        dateOfRetire: formData.dateOfRetire,
+        giftDetails: {
+          giftType: formData.giftType,
+          giftDescription: formData.giftDescription,
+          giftValue: Number(formData.giftValue),
+          disbursementMethod: formData.disbursementMethod,
+          disbursementDate: formData.disbursementDate,
+        },
+      };
+
+      const res = await fetch(
+        "http://localhost:8070/api/v1/retirementGifts/createRetirementGift",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to create loan");
+      if (!res.ok) throw new Error(data.message || "Failed to create retirement gift record");
 
-      Swal.fire("Success", "Loan created successfully!", "success");
-      
-      // Reset form and suggestions
+      Swal.fire("Success", "Retirement gift record created successfully!", "success");
+
       setFormData(initialFormData);
       setSuggestions([]);
       setShowSuggestions(false);
 
-      navigate("/loansManagement");
+      navigate("/retirementGiftManagement");
     } catch (error) {
       Swal.fire("Error", error.message, "error");
     }
@@ -87,7 +108,7 @@ const CreateLoan = () => {
 
   return (
     <div className="flex">
-      <main className="flex-1 bg-fixed bg-cover bg-center bg-no-repeat overflow-y-auto">
+      <main className="flex-1 bg-cover bg-center bg-no-repeat overflow-y-auto">
         <div className="relative z-10 p-6">
           <form
             onSubmit={handleSubmit}
@@ -136,66 +157,100 @@ const CreateLoan = () => {
                 />
               </div>
 
-              {/* NIC */}
+              {/* Date Joined */}
               <div>
-                <label className="block mb-1 font-semibold text-gray-700">NIC</label>
-                <input
-                  type="text"
-                  name="NIC"
-                  value={formData.NIC}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
-                />
-              </div>
-
-              {/* Loan Amount */}
-              <div>
-                <label className="block mb-1 font-semibold text-gray-700">Loan Amount (Rs)</label>
-                <input
-                  type="number"
-                  name="loanAmount"
-                  value={formData.loanAmount}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
-                />
-              </div>
-
-              {/* Role */}
-              <div>
-                <label className="block mb-1 font-semibold text-gray-700">Role</label>
-                <input
-                  type="text"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
-                />
-              </div>
-
-              {/* Loan Date */}
-              <div>
-                <label className="block mb-1 font-semibold text-gray-700">Loan Request Date</label>
+                <label className="block mb-1 font-semibold text-gray-700">Date Joined</label>
                 <input
                   type="date"
-                  name="loanDate"
-                  value={formData.loanDate}
+                  name="dateJoined"
+                  value={formData.dateJoined}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 rounded border focus:outline-orange-500"
                 />
               </div>
 
-              {/* Reason */}
-              <div className="md:col-span-2">
-                <label className="block mb-1 font-semibold text-gray-700">Reason for Loan</label>
-                <textarea
-                  name="reason"
-                  value={formData.reason}
+              {/* Date of Retirement */}
+              <div>
+                <label className="block mb-1 font-semibold text-gray-700">Date of Retirement</label>
+                <input
+                  type="date"
+                  name="dateOfRetire"
+                  value={formData.dateOfRetire}
                   onChange={handleChange}
-                  rows={3}
+                  required
+                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
+                />
+              </div>
+
+              {/* Gift Type */}
+              <div>
+                <label className="block mb-1 font-semibold text-gray-700">Gift Type</label>
+                <select
+                  name="giftType"
+                  value={formData.giftType}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
+                >
+                  <option value="">Select</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Item">Item</option>
+                  <option value="Voucher">Voucher</option>
+                </select>
+              </div>
+
+              {/* Gift Description */}
+              <div>
+                <label className="block mb-1 font-semibold text-gray-700">Gift Description</label>
+                <input
+                  type="text"
+                  name="giftDescription"
+                  value={formData.giftDescription}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
+                />
+              </div>
+
+              {/* Gift Value */}
+              <div>
+                <label className="block mb-1 font-semibold text-gray-700">Gift Value (Rs)</label>
+                <input
+                  type="number"
+                  name="giftValue"
+                  value={formData.giftValue}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
+                />
+              </div>
+
+              {/* Disbursement Method */}
+              <div>
+                <label className="block mb-1 font-semibold text-gray-700">Disbursement Method</label>
+                <select
+                  name="disbursementMethod"
+                  value={formData.disbursementMethod}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 rounded border focus:outline-orange-500"
+                >
+                  <option value="">Select</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Cheque">Cheque</option>
+                  <option value="Handed in Ceremony">Handed in Ceremony</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {/* Disbursement Date */}
+              <div>
+                <label className="block mb-1 font-semibold text-gray-700">Disbursement Date</label>
+                <input
+                  type="date"
+                  name="disbursementDate"
+                  value={formData.disbursementDate}
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-2 rounded border focus:outline-orange-500"
                 />
@@ -207,7 +262,7 @@ const CreateLoan = () => {
                 type="submit"
                 className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-2 rounded"
               >
-                Submit Loan
+                Submit Retirement Gift
               </button>
             </div>
           </form>
@@ -217,4 +272,4 @@ const CreateLoan = () => {
   );
 };
 
-export default CreateLoan;
+export default CreateRetirementGift;

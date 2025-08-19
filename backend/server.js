@@ -55,3 +55,6 @@ app.use("/api/v1/logs", logRoutes);
 
 const deathFundRoutes = require("./routes/deathFundRoutes");
 app.use("/api/v1/deathFunds", deathFundRoutes);
+
+const retirementGiftRoutes = require("./routes/retirementGiftRoutes");
+app.use("/api/v1/retirementGifts", retirementGiftRoutes);

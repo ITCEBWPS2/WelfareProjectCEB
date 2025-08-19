@@ -3,6 +3,7 @@ import bgImage from '../../../images/background.png';
 import { Plus, FileText, ThumbsUp, Clock, Ban } from 'lucide-react';
 import SideBar from "../SideBar";
 import BackButton from '../BackButton';
+import { useEffect } from "react";
 
 // Import your Death Fund components
 import CreateDeathFund from './CreateDeathFund';
@@ -33,6 +34,13 @@ const ManageDeathFund = () => {
     }
   };
 
+  useEffect(() => {
+  document.body.style.overflow = "hidden";
+  return () => {
+    document.body.style.overflow = "auto"; // restore on unmount
+  };
+}, []);
+
   return (
     <div className="flex">
       {/* Sidebar */}
@@ -40,7 +48,7 @@ const ManageDeathFund = () => {
 
       {/* Main Content */}
       <main
-        className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
+        className="flex-1 relative bg-cover bg-center bg-no-repeat bg-fixed overflow-y-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="absolute inset-0 bg-black/30 z-0" />

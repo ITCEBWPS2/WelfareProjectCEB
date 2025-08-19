@@ -3,6 +3,7 @@ import bgImage from '../../../images/background.png';
 import { Plus, FileText, ThumbsUp, Clock, Ban } from 'lucide-react';
 import SideBar from "../SideBar";
 import BackButton from "../../Dashboard/BackButton";
+import { useEffect } from "react";
 
 // Import your loan components
 import CreateLoan from './CreateLoan';
@@ -10,6 +11,10 @@ import ViewLoans from './ViewAllLoans';
 import PendingLoans from './ViewPendingLoans';
 import ApprovedLoans from './ViewApprovedLoans';
 import RejectedLoans from './ViewRejectedLoans';
+
+
+
+
 
 
 const LoanDashboard = () => {
@@ -34,6 +39,13 @@ const LoanDashboard = () => {
     }
   };
 
+  useEffect(() => {
+  document.body.style.overflow = "hidden";
+  return () => {
+    document.body.style.overflow = "auto"; // restore on unmount
+  };
+}, []);
+
   return (
     <div className="flex">
       {/* Sidebar */}
@@ -41,7 +53,7 @@ const LoanDashboard = () => {
 
       {/* Main Content */}
       <main
-        className="flex-1 relative bg-cover bg-center bg-no-repeat overflow-y-auto"
+        className="flex-1 relative bg-cover bg-center bg-no-repeat bg-fixed overflow-y-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="absolute inset-0 bg-black/30 z-0" />
