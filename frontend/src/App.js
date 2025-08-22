@@ -11,6 +11,7 @@ import ViewAdmin from "./pages/Dashboard/AdminManagement/ViewAdmin";
 import DeleteAdmin from "./pages/Dashboard/AdminManagement/DeleteAdmin";
 import UpdateAdmin from "./pages/Dashboard/AdminManagement/UpdateAdmin";
 import ManageAdmins from './pages/Dashboard/AdminManagement/ManageAdmins';
+import EditAdminForm from './pages/Dashboard/AdminManagement/EditAdminForm';
 
 //Employee Management
 import CreateEmployee from './pages/Dashboard/EmployeeManagement/CreateEmployee';
@@ -43,23 +44,17 @@ import ApprovedDeathFunds from './pages/Dashboard/DeathFundManagement/ApprovedDe
 import RetirementGiftManagement from './pages/Dashboard/RetirementGiftManagement/RetirementGiftManagement';
 import CreateRetirementGift from './pages/Dashboard/RetirementGiftManagement/CreateRetirementGift';
 import ViewRetirementGifts from './pages/Dashboard/RetirementGiftManagement/ViewAllRetirementGifts';
+import PendingRetirementGifts from './pages/Dashboard/RetirementGiftManagement/PendingRetirementGifts';
+import ApprovedRetirementGifts from './pages/Dashboard/RetirementGiftManagement/ApprovedRetirementGifts';
+import RejectedRetirementGifts from './pages/Dashboard/RetirementGiftManagement/RejectedRetirementGifts';
 
-
-
-import Scholarships from './pages/Dashboard/SchoolarshipsManagement';
-import RefundsDashboard from './pages/Dashboard/RefundsManagement';
-import MedicalsDashboard from './pages/Dashboard/MedicalManahement';
-
-import EditAdminForm from './pages/Dashboard/AdminManagement/EditAdminForm';
-
-import LoanApplication from './pages/Applications/LoanApplication';
-import RetirementForm from './pages/Applications/RetirementGiftApplication';
-import ScholarshipForm from './pages/Applications/ScholarshipApplication';
-import RefundForm from './pages/Applications/RefundsApplication';
-import MedicalForm from './pages/Applications/MedicalApplication';
-
-
-
+//Scholarship Management
+import ScholarshipManagement from './pages/Dashboard/ScholarshipManagement/ScholarshipManagement';
+import CreateScholarship from './pages/Dashboard/ScholarshipManagement/CreateScholarship';
+import ViewAllScholarships from './pages/Dashboard/ScholarshipManagement/ViewAllScholarships';
+import PendingScholarships from './pages/Dashboard/ScholarshipManagement/PendingScholarships';
+import ApprovedScholarships from './pages/Dashboard/ScholarshipManagement/ApprovedScholarships';
+import RejectedScholarships from './pages/Dashboard/ScholarshipManagement/RejectedScholarships';
 
 
 function App() {
@@ -90,10 +85,10 @@ function App() {
             <Route path="/updateEmployee/:id" element={<EditEmployeeForm />} />
             <Route path="/viewRetiredEmployees" element={<ViewRetiredEmployees />} />
 
+
             {/* Loan Management */}
             <Route path="/loansManagement" element={<LoansManagement/>}/>
             <Route path="/createLoan" element={<CreateLoan/>}/>
-            {/* <Route path="/viewLoans" element={<ViewLoans />} /> */}
             <Route path="/viewLoans" element={<ViewAllLoans />} />
             <Route path="/viewLoans/pending" element={<ViewPendingLoans />} />
             <Route path="/viewLoans/approved" element={<ViewApprovedLoans />} />
@@ -112,15 +107,19 @@ function App() {
             <Route path="/retirementGiftManagement" element={<RetirementGiftManagement/>}/>
             <Route path="/createRetirementGift" element={<CreateRetirementGift/>}/>
             <Route path="/viewRetirementGifts" element={<ViewRetirementGifts/>}/>
+            <Route path="/viewRetirementGifts/pending" element={<PendingRetirementGifts/>}/>
+            <Route path="/viewRetirementGifts/approved" element={<ApprovedRetirementGifts/>}/>
+            <Route path="/viewRetirementGifts/rejected" element={<RejectedRetirementGifts/>}/>
 
-            <Route path="/scholarships" element={<Scholarships/>}/>
-            <Route path="/refundsDashboard" element={<RefundsDashboard/>}/>
-            <Route path="/medicalsDashboard" element={<MedicalsDashboard/>}/>
-            <Route path="/loanApplication" element={<LoanApplication/>}/>
-            <Route path="/retirementForm" element={<RetirementForm/>}/>
-            <Route path="/scholarshipForm" element={<ScholarshipForm/>}/>
-            <Route path="/refundForm" element={<RefundForm/>}/>
-            <Route path="/medicalForm" element={<MedicalForm/>}/>
+
+            {/* Scholarship Management */}
+            <Route path="/scholarshipManagement" element={<ScholarshipManagement />} />
+            <Route path="/createScholarship" element={<CreateScholarship />} />
+            <Route path="/viewScholarships" element={<ViewAllScholarships />} />
+            <Route path="/viewScholarships/pending" element={<PendingScholarships />} />
+            <Route path="/viewScholarships/approved" element={<ApprovedScholarships />} />
+            <Route path="/viewScholarships/rejected" element={<RejectedScholarships />} />
+
         </Routes>
       </Router>
       

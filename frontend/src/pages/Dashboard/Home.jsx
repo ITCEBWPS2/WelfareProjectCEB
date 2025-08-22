@@ -44,7 +44,7 @@ const Home = () => {
       title: 'Scholarships',
       description: 'Manage scholarship applications and monitor award statuses for recipients.',
       icon: <GraduationCap className="w-10 h-10 text-orange-500" />,
-      path: '/scholarships',
+      path: '/scholarshipManagement',
       hoverColor: "hover:bg-orange-100",
       hoverBorder: "border-orange-100"
     },

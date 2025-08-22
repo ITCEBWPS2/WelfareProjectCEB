@@ -58,3 +58,6 @@ app.use("/api/v1/deathFunds", deathFundRoutes);
 
 const retirementGiftRoutes = require("./routes/retirementGiftRoutes");
 app.use("/api/v1/retirementGifts", retirementGiftRoutes);
+
+const scholarshipRoutes = require("./routes/scholarshipRoutes");
+app.use("/api/v1/scholarships", scholarshipRoutes);
